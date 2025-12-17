@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More Houses - Government Goals - Barbados</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: system-ui, -apple-system, sans-serif; background: #f3f2f1; color: #0b0c0c;}
+        .gov-banner {background: #003078; color: white; padding: 12px 0; font-size: 13px;}
+        .gov-banner-container {max-width: 1200px; margin: 0 auto; padding: 0 20px;}
+        header {background: #ffc72c; padding: 40px 20px;}
+        h1 {font-size: 32px; font-weight: 700; margin-bottom: 10px;}
+        .container {max-width: 1200px; margin: 0 auto; padding: 20px;}
+        .goal-header {background: white; padding: 30px; margin: 20px 0; border-left: 4px solid #1d70b8;}
+        .stats {display: flex; gap: 30px; flex-wrap: wrap; margin: 20px 0;}
+        .stat {flex: 1; min-width: 150px;}
+        .stat-num {font-size: 24px; font-weight: 700; color: #0b0c0c;}
+        .stat-label {font-size: 12px; color: #626a6e; margin-top: 6px;}
+        .filters {margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap;}
+        .filter-btn {padding: 8px 16px; background: #e8f1f8; border: 2px solid #1d70b8; border-radius: 4px; cursor: pointer; font-weight: 600;}
+        .filter-btn.active {background: #003078; color: white;}
+        .search {margin: 20px 0;}
+        .search input {width: 100%; padding: 12px; border: 2px solid #0b0c0c; font-size: 14px;}
+        .services {margin: 20px 0;}
+        .card {background: white; border-left: 4px solid #1d70b8; padding: 20px; margin: 10px 0; display: grid; grid-template-columns: 1fr auto; gap: 20px;}
+        .card-info h3 {margin: 0 0 8px 0; font-size: 16px;}
+        .card-info p {margin: 0; font-size: 13px; color: #626a6e; line-height: 1.5;}
+        .card-right {text-align: right;}
+        .badge {display: inline-block; background: #e8f1f8; color: #003078; padding: 4px 10px; font-size: 11px; font-weight: 600; margin: 4px 0;}
+        .meta {font-size: 12px; color: #626a6e; margin-top: 10px;}
+        .notice {background: #fff4e5; border-left: 4px solid #ff9900; padding: 15px; margin: 20px 0; font-size: 13px;}
+        .notice strong {color: #ff9900;}
+        footer {background: #003078; color: white; padding: 20px; margin-top: 40px; text-align: center; font-size: 12px;}
+        footer a {color: white; text-decoration: none;}
+        @media (max-width: 768px) {.card {grid-template-columns: 1fr;} .stats {flex-direction: column;}}
+    </style>
+</head>
+<body>
+    <div class="gov-banner"><div class="gov-banner-container">Official government website</div></div>
+    <header>
+        <div class="container">
+            <div style="font-size: 16px; font-weight: 700; margin-bottom: 15px;">Government of Barbados</div>
+            <div style="margin-bottom: 15px;"><a href="index.html" style="color: #0b0c0c; text-decoration: none; font-weight: 500;">← Back to Services</a></div>
+            <h1>Government Goals</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="goal-header">
+            <h2 style="margin-bottom: 10px;">More Houses</h2>
+            <p>Build 1,500-2,000 houses</p>
+            <div class="stats">
+                <div class="stat"><div class="stat-num" id="total">0</div><div class="stat-label">Actionable Services</div></div>
+                <div class="stat"><div class="stat-num" id="services">0</div><div class="stat-label">Services</div></div>
+                <div class="stat"><div class="stat-num" id="forms">0</div><div class="stat-label">Forms</div></div>
+            </div>
+        </div>
+        
+        <div class="notice">
+            <strong>Note:</strong> This page shows government services that support housing development. Additional services may be available from utility providers like BWA (water connections) and BL&P (electricity connections). Contact these agencies directly for utility connection applications.
+        </div>
+        
+        <div class="search">
+            <input type="text" id="search" placeholder="Search services..." oninput="filter()">
+        </div>
+        
+        <div class="filters" id="filters"></div>
+        
+        <div class="services" id="services-container"></div>
+    </div>
+    
+    <footer>© 2025 Government of Barbados | <a href="index.html">Back to Services</a></footer>
+
+    <script>
+        var goalData = [
+          {
+            "name": "Permission to Develop on Land",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Housing Lands and Maintenance",
+            "department": "Town and Country Planning Department",
+            "category": "planning_permits"
+          },
+          {
+            "name": "Application for Permission to Develop Land",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Housing, Lands and Rural Development",
+            "department": "Not specified",
+            "category": "planning_permits"
+          },
+          {
+            "name": "Form -Permission to construct indoor toilet and bath facilities",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "planning_permits"
+          },
+          {
+            "name": "Form -Permission to demolish for new construction",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "planning_permits"
+          },
+          {
+            "name": "Form -Permission to effect construction work",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "planning_permits"
+          },
+          {
+            "name": "Application Form for Permission to Construct/Alter a Building",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Housing, Lands and Rural Development",
+            "department": "Not specified",
+            "category": "planning_permits"
+          },
+          {
+            "name": "Permission to Build",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Health and Wellness",
+            "department": "Public Health",
+            "category": "planning_permits"
+          },
+          {
+            "name": "Form - permission to build house",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "planning_permits"
+          },
+          {
+            "name": "Building permits",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "TCPDO",
+            "department": "Not specified",
+            "category": "planning_permits"
+          },
+          {
+            "name": "Application for Permission to Erect a Chattel House",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Housing, Lands and Rural Development",
+            "department": "Not specified",
+            "category": "planning_permits"
+          },
+          {
+            "name": "Permission to Erect a Chattel House",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Housing Lands and Maintenance",
+            "department": "Town and Country Planning Department",
+            "category": "planning_permits"
+          },
+          {
+            "name": "Notification of Construction Work",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "planning_permits"
+          },
+          {
+            "name": "Commercial Electrical Inspections",
+            "description": "The inspection and certification of apartment buildings and other commercial & industrial installations",
+            "type": "Service",
+            "ministry": "Ministry of Transport, Works and Water Resources",
+            "department": "Electrical Engineers Department",
+            "category": "building_inspections"
+          },
+          {
+            "name": "Domestic Electrical Inspections",
+            "description": "The inspection and certification of domestic electrical installations",
+            "type": "Service",
+            "ministry": "Ministry of Transport, Works and Water Resources",
+            "department": "Electrical Engineers Department",
+            "category": "building_inspections"
+          },
+          {
+            "name": "Electrical inspections",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Energy and Business",
+            "department": "Electrical Inspectorate",
+            "category": "building_inspections"
+          },
+          {
+            "name": "Alteration Inspections",
+            "description": "The visual inspection of the property to determine the extent of the renovations and any electrical works involved which may require permission for utility disconnection & reconnection.",
+            "type": "Service",
+            "ministry": "Ministry of Transport, Works and Water Resources",
+            "department": "Electrical Engineers Department",
+            "category": "building_inspections"
+          },
+          {
+            "name": "Building Inspection from Fire Service",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Building and Fire Services",
+            "department": "Building and Fire Services",
+            "category": "building_inspections"
+          },
+          {
+            "name": "Request Form for a Building Inspection",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Housing, Lands and Rural Development",
+            "department": "Not specified",
+            "category": "building_inspections"
+          },
+          {
+            "name": "BFS Fire and Life Safety Inspections",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "building_inspections"
+          },
+          {
+            "name": "Temporary Installations",
+            "description": "Inspection of a make shift installation used for the renovation of construction of a building or property",
+            "type": "Service",
+            "ministry": "Ministry of Transport, Works and Water Resources",
+            "department": "Electrical Engineers Department",
+            "category": "building_inspections"
+          },
+          {
+            "name": "Investigating Title to land in Registration Districts in Barbados",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Housing, Lands and Maintenance",
+            "department": "Land Adjudication Unit",
+            "category": "land_property"
+          },
+          {
+            "name": "Adjudicating and Declaring title to land",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Housing, Lands and Maintenance",
+            "department": "Land Adjudication Unit",
+            "category": "land_property"
+          },
+          {
+            "name": "Adjudicating boundary disputes and other disputes wih respect to Claims to title and other interests in land",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Housing, Lands and Maintenance",
+            "department": "Land Adjudication Unit",
+            "category": "land_property"
+          },
+          {
+            "name": "Review Application for Restoration of Title Deeds with supporting documents",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Housing, Lands and Maintenance",
+            "department": "Land Registry",
+            "category": "land_property"
+          },
+          {
+            "name": "Recording of Deeds",
+            "description": "Deeds and original Documents which are used as supporting documentation for various applications can be recorded at the Registration Department and Certified copies issued for use",
+            "type": "Service",
+            "ministry": "Office of the Attorney General",
+            "department": "Registration Department - Records Section",
+            "category": "land_property"
+          },
+          {
+            "name": "Filing of Matters under Land (Title Proceedings) Act",
+            "description": "Applications filed in the High Court for hearing before a Judge with respect to matters relating to adverse possession, faulty title deeds, etc",
+            "type": "Service",
+            "ministry": "Office of the Attorney General",
+            "department": "Registration Department - High Court Registry",
+            "category": "land_property"
+          },
+          {
+            "name": "Investigating and hearing matters referred by a judge under the Land (Title Proceedings) Act, 2011-7",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Housing, Lands and Maintenance",
+            "department": "Land Adjudication Unit",
+            "category": "land_property"
+          },
+          {
+            "name": "Conveying of title under the Tenantries Freehold Purchase Act",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Housing, Lands and Maintenance",
+            "department": "Land Registry",
+            "category": "land_property"
+          },
+          {
+            "name": "Investigation of title under the Tenantries Freehold Purchase Act",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Housing, Lands and Maintenance",
+            "department": "Land Registry",
+            "category": "land_property"
+          },
+          {
+            "name": "Enables persons to file First Time Home Owner Grant Applications returns",
+            "description": "Electronic filing of First Time Home Owner Grant applications via TAMIS",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Barbados Revenue Authority",
+            "category": "housing_finance"
+          },
+          {
+            "name": "Housing Programme",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Housing, Lands and Maintenance",
+            "department": "Rural Development Commission",
+            "category": "housing_finance"
+          },
+          {
+            "name": "House rent (NHC)",
+            "description": "Enables citizens to apply for payment of NHC rent assistance",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Welfare Department",
+            "category": "housing_finance"
+          },
+          {
+            "name": "House rent (private)",
+            "description": "Enables citizens to apply for payment of private rent assistance",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Welfare Department",
+            "category": "housing_finance"
+          },
+          {
+            "name": "Enables quarry operators to apply for a Quarry Licence.",
+            "description": "Quarry operators apply for a license to operate, along with a declaration form and proof of planning permission from the Town and Country Planning Department. The payment is made to the Ministry of Labour, Social Security and Third Sector (Account Department) or the Treasury Department. The Safety and Health Officer (SHO) will inspect the quarry before granting permission. Thereafter, the licence will be issued.",
+            "type": "Service",
+            "ministry": "Ministry of Labour, Social Security and Third Sector",
+            "department": "Labour Department -Safety and Health Section",
+            "category": "construction_support"
+          },
+          {
+            "name": "Enables businesses and individuals to apply for Tourism Concessions under the Tourism Development Act, Cap. 341",
+            "description": "Tourism Concessions can be accessed through the Interim Approval of a Tourism Project Stage which grants Building Materials and Supplies free of Customs Duty and the Licence of a Tourism Product Stage where Operational Items can be accessed free of Customs Duties",
+            "type": "Service",
+            "ministry": "Ministry of Tourism and International Transport",
+            "department": "Research Department",
+            "category": "construction_support"
+          },
+          {
+            "name": "Enables Persons with Disabilities (PWDs) to obtain accessibility modifications to their homes",
+            "description": "This is facilitated through the construction of ramps, widening of doorways and the installation of handrails.; This is facilitated through the construction of ramps, widening of doorways and the installation of handrails.",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "National Disabilities Unit (NDU)",
+            "category": "construction_support"
+          },
+          {
+            "name": "Plant proagation and soil conservation*",
+            "description": "Provision of fruit and agroforestry plants and information on their cultivation, assisting with soil conservation (gabion construction), assisting with reaforestation and orchard development",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Soil Conservation Unit",
+            "category": "construction_support"
+          },
+          {
+            "name": "Payments to the Government of Barbados",
+            "description": "Enables persons to make payments to the Government of Barbados e.g. Land Tax",
+            "type": "Service",
+            "ministry": "Ministry of Foreign Affairs and Foreign Trade/Finance",
+            "department": "Overseas Offices / BRA",
+            "category": "utilities_infrastructure"
+          },
+          {
+            "name": "Enables persons to pay Land Tax online",
+            "description": "Electronic payment of Land Tax via Portal.bra.gov.bb; Electronic payment of Land Tax via Portal.bra.gov.bb",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Barbados Revenue Authority",
+            "category": "utilities_infrastructure"
+          },
+          {
+            "name": "Enables persons to Apply for Land Tax",
+            "description": "Land Tax Clearance Certificate Application",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Barbados Revenue Authority",
+            "category": "utilities_infrastructure"
+          }
+        ];
+        
+        var categories = {
+            'planning_permits': 'Planning & Development Permits',
+            'building_inspections': 'Building Inspections & Certifications',
+            'land_property': 'Land & Property Registration',
+            'housing_finance': 'Housing Finance & Support',
+            'construction_support': 'Construction Support Services',
+            'utilities_infrastructure': 'Utilities & Infrastructure'
+        };
+        
+        var selectedCats = Object.keys(categories);
+        
+        function init() {
+            document.getElementById('total').textContent = goalData.length;
+            document.getElementById('services').textContent = goalData.filter(function(s) { return s.type === 'Service'; }).length;
+            document.getElementById('forms').textContent = goalData.filter(function(s) { return s.type === 'Form'; }).length;
+            
+            var html = '';
+            for (var cat in categories) {
+                html += '<button class="filter-btn active" data-cat="' + cat + '" onclick="toggle(this)">◆ ' + categories[cat] + '</button>';
+            }
+            document.getElementById('filters').innerHTML = html;
+            
+            render(goalData);
+        }
+        
+        function toggle(btn) {
+            var cat = btn.getAttribute('data-cat');
+            var idx = selectedCats.indexOf(cat);
+            if (idx > -1) selectedCats.splice(idx, 1);
+            else selectedCats.push(cat);
+            btn.classList.toggle('active');
+            filter();
+        }
+        
+        function filter() {
+            var search = document.getElementById('search').value.toLowerCase();
+            var filtered = goalData.filter(function(s) {
+                return selectedCats.indexOf(s.category) > -1 &&
+                    (s.name.toLowerCase().indexOf(search) > -1 || 
+                     s.description.toLowerCase().indexOf(search) > -1 ||
+                     s.ministry.toLowerCase().indexOf(search) > -1);
+            });
+            render(filtered);
+        }
+        
+        function render(items) {
+            var html = '';
+            if (items.length === 0) {
+                html = '<div style="padding: 40px 20px; text-align: center; color: #626a6e;">No services found</div>';
+            } else {
+                for (var i = 0; i < items.length; i++) {
+                    var s = items[i];
+                    html += '<div class="card"><div class="card-info"><h3>' + esc(s.name) + '</h3><p>' + esc(s.description) + '</p><div class="meta">' + esc(s.ministry) + ' • ' + esc(s.department) + '</div></div><div class="card-right"><div class="badge">' + esc(s.type) + '</div><div class="badge">' + categories[s.category] + '</div></div></div>';
+                }
+            }
+            document.getElementById('services-container').innerHTML = html;
+        }
+        
+        function esc(t) {
+            var d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
+        
+        init();
+    </script>
+</body>
+</html>

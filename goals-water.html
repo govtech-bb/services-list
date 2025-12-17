@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Water for All - Government Goals - Barbados</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: system-ui, -apple-system, sans-serif; background: #f3f2f1; color: #0b0c0c;}
+        .gov-banner {background: #003078; color: white; padding: 12px 0; font-size: 13px;}
+        .gov-banner-container {max-width: 1200px; margin: 0 auto; padding: 0 20px;}
+        header {background: #ffc72c; padding: 40px 20px;}
+        h1 {font-size: 32px; font-weight: 700; margin-bottom: 10px;}
+        .container {max-width: 1200px; margin: 0 auto; padding: 20px;}
+        .goal-header {background: white; padding: 30px; margin: 20px 0; border-left: 4px solid #1d70b8;}
+        .stats {display: flex; gap: 30px; flex-wrap: wrap; margin: 20px 0;}
+        .stat {flex: 1; min-width: 150px;}
+        .stat-num {font-size: 24px; font-weight: 700; color: #0b0c0c;}
+        .stat-label {font-size: 12px; color: #626a6e; margin-top: 6px;}
+        .filters {margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap;}
+        .filter-btn {padding: 8px 16px; background: #e8f1f8; border: 2px solid #1d70b8; border-radius: 4px; cursor: pointer; font-weight: 600;}
+        .filter-btn.active {background: #003078; color: white;}
+        .search {margin: 20px 0;}
+        .search input {width: 100%; padding: 12px; border: 2px solid #0b0c0c; font-size: 14px;}
+        .services {margin: 20px 0;}
+        .card {background: white; border-left: 4px solid #1d70b8; padding: 20px; margin: 10px 0; display: grid; grid-template-columns: 1fr auto; gap: 20px;}
+        .card-info h3 {margin: 0 0 8px 0; font-size: 16px;}
+        .card-info p {margin: 0; font-size: 13px; color: #626a6e; line-height: 1.5;}
+        .card-right {text-align: right;}
+        .badge {display: inline-block; background: #e8f1f8; color: #003078; padding: 4px 10px; font-size: 11px; font-weight: 600; margin: 4px 0;}
+        .meta {font-size: 12px; color: #626a6e; margin-top: 10px;}
+        .notice {background: #fff4e5; border-left: 4px solid #ff9900; padding: 15px; margin: 20px 0; font-size: 13px;}
+        .notice strong {color: #ff9900;}
+        .warning {background: #fef7f7; border-left: 4px solid #d4351c; padding: 20px; margin: 20px 0; font-size: 14px;}
+        .warning strong {color: #d4351c; font-size: 16px;}
+        .warning ul {margin: 10px 0 0 20px;}
+        .warning li {margin: 5px 0;}
+        footer {background: #003078; color: white; padding: 20px; margin-top: 40px; text-align: center; font-size: 12px;}
+        footer a {color: white; text-decoration: none;}
+        @media (max-width: 768px) {.card {grid-template-columns: 1fr;} .stats {flex-direction: column;}}
+    </style>
+</head>
+<body>
+    <div class="gov-banner"><div class="gov-banner-container">Official government website</div></div>
+    <header>
+        <div class="container">
+            <div style="font-size: 16px; font-weight: 700; margin-bottom: 15px;">Government of Barbados</div>
+            <div style="margin-bottom: 15px;"><a href="index.html" style="color: #0b0c0c; text-decoration: none; font-weight: 500;">← Back to Services</a></div>
+            <h1>Government Goals</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="goal-header">
+            <h2 style="margin-bottom: 10px;">Clean Water for All</h2>
+            <p>Resolve brown water issues and increase access to piped water</p>
+            <div class="stats">
+                <div class="stat"><div class="stat-num" id="total">0</div><div class="stat-label">Actionable Services</div></div>
+                <div class="stat"><div class="stat-num" id="services">0</div><div class="stat-label">Services</div></div>
+                <div class="stat"><div class="stat-num" id="forms">0</div><div class="stat-label">Forms</div></div>
+            </div>
+        </div>
+        
+        <div class="warning">
+            <strong>⚠️ CRITICAL SERVICE GAPS</strong>
+            <p style="margin-top: 10px;">The following essential water services are <strong>NOT found in this service registry</strong> and must be accessed directly through the relevant agencies:</p>
+            <ul>
+                <li><strong>BWA (Barbados Water Authority)</strong> - Water connections, piped water installation, brown water complaints, water infrastructure improvements</li>
+                <li><strong>Water main repairs and replacements</strong></li>
+                <li><strong>New piped water connections for homes</strong></li>
+                <li><strong>Brown water issue resolution services</strong></li>
+            </ul>
+            <p style="margin-top: 10px;"><strong>For water connection and supply issues, contact BWA directly.</strong> The services shown below are support services available in the government registry.</p>
+        </div>
+        
+        <div class="notice">
+            <strong>Note:</strong> This page shows only the water-related services found in the government service registry. Most core water supply services are provided by BWA and are not included in this registry.
+        </div>
+        
+        <div class="search">
+            <input type="text" id="search" placeholder="Search services..." oninput="filter()">
+        </div>
+        
+        <div class="filters" id="filters"></div>
+        
+        <div class="services" id="services-container"></div>
+    </div>
+    
+    <footer>© 2025 Government of Barbados | <a href="index.html">Back to Services</a></footer>
+
+    <script>
+        var goalData = [
+          {
+            "name": "Chemical Analysis",
+            "description": "Analysis of water (potable, ground, surface , simming pools, waste) samples for inorganic (nutrients, tracemetals) components, Biological and chemical oxygen Demand; Analysis of water (potable, ground, surface , simming pools, waste) samples for inorganic (nutrients, tracemetals) components, Biological and chemical oxygen Demand; Analysis of water (potable, ground, surface , simming pools, waste) samples for inorganic (nutrients, tracemetals) components, Biological and chemical oxygen Demand; Analysis of soil , fertiliser and plant material to determine nutrients (Nitrogen, phosphorus, Potassium (NPK), micronutrients, sodium and trace metals; Analysis of soil, fertiliser and plant material to determine nutrients (Nitrogen, phosphorus, Potassium (NPK), micronutrients, Sodium and trace metals; Analysis of soil to dtermine its texture (sand, silt, clay content)",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Government Analytical Services - Inorganic Chemistry",
+            "category": "water_quality"
+          },
+          {
+            "name": "Microbiological analysis",
+            "description": "Determination of microbiological indicator organisms in water (potable, ground, surface , simming pools, waste) samples; Determination of microbiological indicator organisms in water (potable, ground, surface , simming pools, waste) samples",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Government Analytical Services - Water Microbiology",
+            "category": "water_quality"
+          },
+          {
+            "name": "Water Bill",
+            "description": "Enables citizens to apply for water bill assistance",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Welfare Department",
+            "category": "water_assistance"
+          },
+          {
+            "name": "Climate Services",
+            "description": "Monthly climate predictions (up to 6 months ahead) for sectors such as agriculture, water resource management (e.g., BWA), and the Ministry of Health and Wellness. Alerts issued as necessary.",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Barbados Meteorological Services",
+            "category": "water_planning"
+          },
+          {
+            "name": "BWA Agricultureal water rate form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Agriculture Food and Nutritional Security",
+            "department": "Agricultural Development",
+            "category": "water_planning"
+          },
+          {
+            "name": "Form -Permission to construct indoor toilet and bath facilities",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "plumbing_sanitation"
+          },
+          {
+            "name": "Provision of Irrigation Services",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "BADMC",
+            "category": "irrigation"
+          },
+          {
+            "name": "Rebate on Irrigation Facilities - Individual",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Agriculture Food and Nutritional Security",
+            "department": "Agricultural Development",
+            "category": "irrigation"
+          },
+          {
+            "name": "Rebate on Irrigation Facilities - Organisation",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Agriculture Food and Nutritional Security",
+            "department": "Agricultural Development",
+            "category": "irrigation"
+          }
+        ];
+        
+        var categories = {
+            'water_quality': 'Water Quality Testing & Monitoring',
+            'water_assistance': 'Water Bill Assistance',
+            'water_planning': 'Water Resource Planning',
+            'plumbing_sanitation': 'Plumbing & Sanitation Permits',
+            'irrigation': 'Irrigation (Agricultural Water)'
+        };
+        
+        var selectedCats = Object.keys(categories);
+        
+        function init() {
+            document.getElementById('total').textContent = goalData.length;
+            document.getElementById('services').textContent = goalData.filter(function(s) { return s.type === 'Service'; }).length;
+            document.getElementById('forms').textContent = goalData.filter(function(s) { return s.type === 'Form'; }).length;
+            
+            var html = '';
+            for (var cat in categories) {
+                html += '<button class="filter-btn active" data-cat="' + cat + '" onclick="toggle(this)">◆ ' + categories[cat] + '</button>';
+            }
+            document.getElementById('filters').innerHTML = html;
+            
+            render(goalData);
+        }
+        
+        function toggle(btn) {
+            var cat = btn.getAttribute('data-cat');
+            var idx = selectedCats.indexOf(cat);
+            if (idx > -1) selectedCats.splice(idx, 1);
+            else selectedCats.push(cat);
+            btn.classList.toggle('active');
+            filter();
+        }
+        
+        function filter() {
+            var search = document.getElementById('search').value.toLowerCase();
+            var filtered = goalData.filter(function(s) {
+                return selectedCats.indexOf(s.category) > -1 &&
+                    (s.name.toLowerCase().indexOf(search) > -1 || 
+                     s.description.toLowerCase().indexOf(search) > -1 ||
+                     s.ministry.toLowerCase().indexOf(search) > -1);
+            });
+            render(filtered);
+        }
+        
+        function render(items) {
+            var html = '';
+            if (items.length === 0) {
+                html = '<div style="padding: 40px 20px; text-align: center; color: #626a6e;">No services found</div>';
+            } else {
+                for (var i = 0; i < items.length; i++) {
+                    var s = items[i];
+                    html += '<div class="card"><div class="card-info"><h3>' + esc(s.name) + '</h3><p>' + esc(s.description) + '</p><div class="meta">' + esc(s.ministry) + ' • ' + esc(s.department) + '</div></div><div class="card-right"><div class="badge">' + esc(s.type) + '</div><div class="badge">' + categories[s.category] + '</div></div></div>';
+                }
+            }
+            document.getElementById('services-container').innerHTML = html;
+        }
+        
+        function esc(t) {
+            var d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
+        
+        init();
+    </script>
+</body>
+</html>

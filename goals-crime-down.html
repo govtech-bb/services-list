@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Down - Government Goals - Barbados</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: system-ui, -apple-system, sans-serif; background: #f3f2f1; color: #0b0c0c;}
+        .gov-banner {background: #003078; color: white; padding: 12px 0; font-size: 13px;}
+        .gov-banner-container {max-width: 1200px; margin: 0 auto; padding: 0 20px;}
+        header {background: #ffc72c; padding: 40px 20px;}
+        h1 {font-size: 32px; font-weight: 700; margin-bottom: 10px;}
+        .container {max-width: 1200px; margin: 0 auto; padding: 20px;}
+        .goal-header {background: white; padding: 30px; margin: 20px 0; border-left: 4px solid #1d70b8;}
+        .stats {display: flex; gap: 30px; flex-wrap: wrap; margin: 20px 0;}
+        .stat {flex: 1; min-width: 150px;}
+        .stat-num {font-size: 24px; font-weight: 700; color: #0b0c0c;}
+        .stat-label {font-size: 12px; color: #626a6e; margin-top: 6px;}
+        .filters {margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap;}
+        .filter-btn {padding: 8px 16px; background: #e8f1f8; border: 2px solid #1d70b8; border-radius: 4px; cursor: pointer; font-weight: 600;}
+        .filter-btn.active {background: #003078; color: white;}
+        .search {margin: 20px 0;}
+        .search input {width: 100%; padding: 12px; border: 2px solid #0b0c0c; font-size: 14px;}
+        .services {margin: 20px 0;}
+        .card {background: white; border-left: 4px solid #1d70b8; padding: 20px; margin: 10px 0; display: grid; grid-template-columns: 1fr auto; gap: 20px;}
+        .card-info h3 {margin: 0 0 8px 0; font-size: 16px;}
+        .card-info p {margin: 0; font-size: 13px; color: #626a6e; line-height: 1.5;}
+        .card-right {text-align: right;}
+        .badge {display: inline-block; background: #e8f1f8; color: #003078; padding: 4px 10px; font-size: 11px; font-weight: 600; margin: 4px 0;}
+        .meta {font-size: 12px; color: #626a6e; margin-top: 10px;}
+        .notice {background: #e8f9f3; border-left: 4px solid #00703c; padding: 15px; margin: 20px 0; font-size: 13px;}
+        .notice strong {color: #00703c;}
+        .warning {background: #fff4e5; border-left: 4px solid #ff9900; padding: 20px; margin: 20px 0; font-size: 14px;}
+        .warning strong {color: #ff9900; font-size: 16px;}
+        .warning ul {margin: 10px 0 0 20px;}
+        .warning li {margin: 5px 0;}
+        footer {background: #003078; color: white; padding: 20px; margin-top: 40px; text-align: center; font-size: 12px;}
+        footer a {color: white; text-decoration: none;}
+        @media (max-width: 768px) {.card {grid-template-columns: 1fr;} .stats {flex-direction: column;}}
+    </style>
+</head>
+<body>
+    <div class="gov-banner"><div class="gov-banner-container">Official government website</div></div>
+    <header>
+        <div class="container">
+            <div style="font-size: 16px; font-weight: 700; margin-bottom: 15px;">Government of Barbados</div>
+            <div style="margin-bottom: 15px;"><a href="index.html" style="color: #0b0c0c; text-decoration: none; font-weight: 500;">← Back to Services</a></div>
+            <h1>Government Goals</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="goal-header">
+            <h2 style="margin-bottom: 10px;">Crime Down</h2>
+            <p>50% reduction in crime and 30% reduction in murders by 2030</p>
+            <div class="stats">
+                <div class="stat"><div class="stat-num" id="total">0</div><div class="stat-label">Actionable Services</div></div>
+                <div class="stat"><div class="stat-num" id="services">0</div><div class="stat-label">Services</div></div>
+                <div class="stat"><div class="stat-num" id="forms">0</div><div class="stat-label">Forms</div></div>
+            </div>
+        </div>
+        
+        <div class="warning">
+            <strong>⚠️ IMPORTANT NOTE</strong>
+            <p style="margin-top: 10px;">Many services shown are internal administrative forms (staff leave forms, travel forms) rather than citizen-facing crime prevention services. The dataset also has gaps:</p>
+            <ul>
+                <li>No online crime reporting system found</li>
+                <li>No community policing programs listed</li>
+                <li>No neighborhood watch registration</li>
+                <li>Limited victim support services (only 5 services)</li>
+                <li>Prison services are mostly internal staff forms</li>
+            </ul>
+            <p style="margin-top: 10px;">To report crimes or emergencies, call 211 or visit your nearest police station.</p>
+        </div>
+        
+        <div class="notice">
+            <strong>Note:</strong> This page shows services found in the government registry related to police, courts, prisons, and victim support. Many are administrative or staff-facing rather than public crime prevention programs.
+        </div>
+        
+        <div class="search">
+            <input type="text" id="search" placeholder="Search services..." oninput="filter()">
+        </div>
+        
+        <div class="filters" id="filters"></div>
+        
+        <div class="services" id="services-container"></div>
+    </div>
+    
+    <footer>© 2025 Government of Barbados | <a href="index.html">Back to Services</a></footer>
+
+    <script>
+        var goalData = [
+          {
+            "name": "Get a crime or accident report (p2)",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "The police service (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "Apply for a loud music permit (p1)",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "The police service (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "Firearms permit (p3)",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "The police service (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "Application for police services (presence)",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "The police service (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "pay parking / traffic fines",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "The police service (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "public gathering license (marches, marches, vigils, etc)",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "The police service (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "request for police band",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "The police service (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "rent a traffic barricade",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "The police service (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "request for cctv footage",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "The police service (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "police certificate of character",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "The police service (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "Police Certificate of Character",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Royal Barbados Police Force",
+            "department": "Royal Barbados Police Force",
+            "category": "police_services"
+          },
+          {
+            "name": "Police Certificate of Character Guidance",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Royal Barbados Police Force",
+            "department": "Royal Barbados Police Force",
+            "category": "police_services"
+          },
+          {
+            "name": "Revised Police Certificate of Character application",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "Test Form - Application for Police Certificate of Character",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "Police Certificate of Character - Authorization Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "Police Certificate of Character Certificate",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Barbados Police Service",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "Notification of Refusal of a Test Certificate - Police Report",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "Enables injured persons, a lawyer/representative on behalf of the injured person, or an employer to request accident reports.",
+            "description": "The request must be made to the Labour Department. The payment of the prescribed fee is paid to the Ministry of Labour, Social Security and Third Sector (Accounts Department), the report will be delivered to the person(s) requesting the document.",
+            "type": "Service",
+            "ministry": "Ministry of Labour, Social Security and Third Sector",
+            "department": "Labour Department -Safety and Health Section",
+            "category": "police_services"
+          },
+          {
+            "name": "Tenders Security Refunds",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Treasury Department",
+            "category": "police_services"
+          },
+          {
+            "name": "Cyber Security Training Programme",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "police_services"
+          },
+          {
+            "name": "Criminal Matters Lodged in the Magistrate's Court",
+            "description": "Persons charged with Criminal offences by members of the Barbados Police Service",
+            "type": "Service",
+            "ministry": "Office of the Attorney General",
+            "department": "Registration Department - Magistrate's Courts",
+            "category": "court_criminal"
+          },
+          {
+            "name": "Traffic Matters Lodged in the Magistrate's Court",
+            "description": "Persons charged with Traffic Offences by members of the Barbados Police Service - Must be served by a Marshal in order for the matter to be heard in Court",
+            "type": "Service",
+            "ministry": "Office of the Attorney General",
+            "department": "Registration Department - Magistrate's Courts",
+            "category": "court_criminal"
+          },
+          {
+            "name": "Hearing of Criminal Indictable Matters",
+            "description": "Hearing of Indictable criminal matters before either a Judge and jury or a judge alone",
+            "type": "Service",
+            "ministry": "Office of the Attorney General",
+            "department": "Registration Department - High Court Registry",
+            "category": "court_criminal"
+          },
+          {
+            "name": "Production of station diaries for the Police and the Prison",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Government Printing Department",
+            "category": "prison_rehabilitation"
+          },
+          {
+            "name": "Prisoners Online Payments",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Barbados Prison Service",
+            "category": "prison_rehabilitation"
+          },
+          {
+            "name": "Prisoners Online Courts",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Barbados Prison Service",
+            "category": "prison_rehabilitation"
+          },
+          {
+            "name": "Prisoners Online Visits",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Barbados Prison Service",
+            "category": "prison_rehabilitation"
+          },
+          {
+            "name": "Deposits to Prisons",
+            "description": "Enables the deposit of funds for inmates",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Barbados Postal Service",
+            "category": "prison_rehabilitation"
+          },
+          {
+            "name": "Application for Prison Officer II - 2024",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "prison_rehabilitation"
+          },
+          {
+            "name": "Resumption of Duty - Barbados Prison Service",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "prison_rehabilitation"
+          },
+          {
+            "name": "Barbados Prison Service -Gazetted Officers Leave Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "prison_rehabilitation"
+          },
+          {
+            "name": "Barbados Prison Service - Leave Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Management Services Specialist MIST",
+            "department": "Not specified",
+            "category": "prison_rehabilitation"
+          },
+          {
+            "name": "Barbados Prison Service Travel Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "prison_rehabilitation"
+          },
+          {
+            "name": "Barbados Prison Service Leave Form - Superintendent",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "prison_rehabilitation"
+          },
+          {
+            "name": "Barbados Prison Service Leave Form - Short-term",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "prison_rehabilitation"
+          },
+          {
+            "name": "PRDS Form - Barbados Prison Service",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "prison_rehabilitation"
+          },
+          {
+            "name": "Travel Form -Barbados Prison Service",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "prison_rehabilitation"
+          },
+          {
+            "name": "RUDC Probation Review Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "prison_rehabilitation"
+          },
+          {
+            "name": "Enables children to be placed into a Place of Safety",
+            "description": "The Residential Programme meets the basic needs of those children in need of a safe place to stay, where they can no longer reside at home. Beneficiaries include children who are at risk and who can no longer reside with their families.",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Child Care Board",
+            "category": "victim_support"
+          },
+          {
+            "name": "Domestic violence victim support",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of people, empowerment and elder affairs",
+            "department": "Not specified",
+            "category": "victim_support"
+          },
+          {
+            "name": "Fire Victim Assistance Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "victim_support"
+          },
+          {
+            "name": "Receiving and Hearing Applications for Protection Orders",
+            "description": "Applications filed in the Magistrate's Court for hearing before a Magistrate with respect to docmestic violence among family members",
+            "type": "Service",
+            "ministry": "Office of the Attorney General",
+            "department": "Registration Department - Magistrate's Courts",
+            "category": "victim_support"
+          },
+          {
+            "name": "Citizens in Distress",
+            "description": "Enables citizens abroad in physical/mental distress to receive a measure of relief; Enables citizens detained at airports to receive assistance; Enables citizens in overseas hospitals to receive consular visits; Enables consular visits to incarcerated citizens; Enables assistance in cross border child custody cases",
+            "type": "Service",
+            "ministry": "Ministry of Foreign Affairs and Foreign Trade",
+            "department": "Overseas Offices",
+            "category": "victim_support"
+          },
+          {
+            "name": "Multi-faceted initiative dedicated to crime reduction and peace building",
+            "description": "To develop a series of strategies and interventions that reduce crime and promote peace which include, inter alia, the formulation of sports competitions and cultural programmes, technical and vocational skills training and community initiatives .",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "National Peace Programme",
+            "category": "crime_prevention"
+          },
+          {
+            "name": "Safely house, rehabilitate and secure individuals referred to our care.",
+            "description": "An arm of the Criminal Justice System which provides for a safe and stable society",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Barbados Prison Service",
+            "category": "crime_prevention"
+          }
+        ];
+        
+        var categories = {
+            'police_services': 'Police Services',
+            'court_criminal': 'Court & Criminal Justice',
+            'prison_rehabilitation': 'Prison & Rehabilitation Services',
+            'victim_support': 'Victim Support Services',
+            'crime_prevention': 'Crime Prevention Programs'
+        };
+        
+        var selectedCats = Object.keys(categories);
+        
+        function init() {
+            document.getElementById('total').textContent = goalData.length;
+            document.getElementById('services').textContent = goalData.filter(function(s) { return s.type === 'Service'; }).length;
+            document.getElementById('forms').textContent = goalData.filter(function(s) { return s.type === 'Form'; }).length;
+            
+            var html = '';
+            for (var cat in categories) {
+                html += '<button class="filter-btn active" data-cat="' + cat + '" onclick="toggle(this)">◆ ' + categories[cat] + '</button>';
+            }
+            document.getElementById('filters').innerHTML = html;
+            
+            render(goalData);
+        }
+        
+        function toggle(btn) {
+            var cat = btn.getAttribute('data-cat');
+            var idx = selectedCats.indexOf(cat);
+            if (idx > -1) selectedCats.splice(idx, 1);
+            else selectedCats.push(cat);
+            btn.classList.toggle('active');
+            filter();
+        }
+        
+        function filter() {
+            var search = document.getElementById('search').value.toLowerCase();
+            var filtered = goalData.filter(function(s) {
+                return selectedCats.indexOf(s.category) > -1 &&
+                    (s.name.toLowerCase().indexOf(search) > -1 || 
+                     s.description.toLowerCase().indexOf(search) > -1 ||
+                     s.ministry.toLowerCase().indexOf(search) > -1);
+            });
+            render(filtered);
+        }
+        
+        function render(items) {
+            var html = '';
+            if (items.length === 0) {
+                html = '<div style="padding: 40px 20px; text-align: center; color: #626a6e;">No services found</div>';
+            } else {
+                for (var i = 0; i < items.length; i++) {
+                    var s = items[i];
+                    html += '<div class="card"><div class="card-info"><h3>' + esc(s.name) + '</h3><p>' + esc(s.description) + '</p><div class="meta">' + esc(s.ministry) + ' • ' + esc(s.department) + '</div></div><div class="card-right"><div class="badge">' + esc(s.type) + '</div><div class="badge">' + categories[s.category] + '</div></div></div>';
+                }
+            }
+            document.getElementById('services-container').innerHTML = html;
+        }
+        
+        function esc(t) {
+            var d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
+        
+        init();
+    </script>
+</body>
+</html>

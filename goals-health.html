@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QEH/Polyclinics - Government Goals - Barbados</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: system-ui, -apple-system, sans-serif; background: #f3f2f1; color: #0b0c0c;}
+        .gov-banner {background: #003078; color: white; padding: 12px 0; font-size: 13px;}
+        .gov-banner-container {max-width: 1200px; margin: 0 auto; padding: 0 20px;}
+        header {background: #ffc72c; padding: 40px 20px;}
+        h1 {font-size: 32px; font-weight: 700; margin-bottom: 10px;}
+        .container {max-width: 1200px; margin: 0 auto; padding: 20px;}
+        .goal-header {background: white; padding: 30px; margin: 20px 0; border-left: 4px solid #1d70b8;}
+        .stats {display: flex; gap: 30px; flex-wrap: wrap; margin: 20px 0;}
+        .stat {flex: 1; min-width: 150px;}
+        .stat-num {font-size: 24px; font-weight: 700; color: #0b0c0c;}
+        .stat-label {font-size: 12px; color: #626a6e; margin-top: 6px;}
+        .filters {margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap;}
+        .filter-btn {padding: 8px 16px; background: #e8f1f8; border: 2px solid #1d70b8; border-radius: 4px; cursor: pointer; font-weight: 600;}
+        .filter-btn.active {background: #003078; color: white;}
+        .search {margin: 20px 0;}
+        .search input {width: 100%; padding: 12px; border: 2px solid #0b0c0c; font-size: 14px;}
+        .services {margin: 20px 0;}
+        .card {background: white; border-left: 4px solid #1d70b8; padding: 20px; margin: 10px 0; display: grid; grid-template-columns: 1fr auto; gap: 20px;}
+        .card-info h3 {margin: 0 0 8px 0; font-size: 16px;}
+        .card-info p {margin: 0; font-size: 13px; color: #626a6e; line-height: 1.5;}
+        .card-right {text-align: right;}
+        .badge {display: inline-block; background: #e8f1f8; color: #003078; padding: 4px 10px; font-size: 11px; font-weight: 600; margin: 4px 0;}
+        .meta {font-size: 12px; color: #626a6e; margin-top: 10px;}
+        .notice {background: #e8f9f3; border-left: 4px solid #00703c; padding: 15px; margin: 20px 0; font-size: 13px;}
+        .notice strong {color: #00703c;}
+        .warning {background: #fef7f7; border-left: 4px solid #d4351c; padding: 20px; margin: 20px 0; font-size: 14px;}
+        .warning strong {color: #d4351c; font-size: 16px;}
+        .warning ul {margin: 10px 0 0 20px;}
+        .warning li {margin: 5px 0;}
+        footer {background: #003078; color: white; padding: 20px; margin-top: 40px; text-align: center; font-size: 12px;}
+        footer a {color: white; text-decoration: none;}
+        @media (max-width: 768px) {.card {grid-template-columns: 1fr;} .stats {flex-direction: column;}}
+    </style>
+</head>
+<body>
+    <div class="gov-banner"><div class="gov-banner-container">Official government website</div></div>
+    <header>
+        <div class="container">
+            <div style="font-size: 16px; font-weight: 700; margin-bottom: 15px;">Government of Barbados</div>
+            <div style="margin-bottom: 15px;"><a href="index.html" style="color: #0b0c0c; text-decoration: none; font-weight: 500;">← Back to Services</a></div>
+            <h1>Government Goals</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="goal-header">
+            <h2 style="margin-bottom: 10px;">QEH/Polyclinics</h2>
+            <p>Improve service quality and patient outcomes</p>
+            <div class="stats">
+                <div class="stat"><div class="stat-num" id="total">0</div><div class="stat-label">Actionable Services</div></div>
+                <div class="stat"><div class="stat-num" id="services">0</div><div class="stat-label">Services</div></div>
+                <div class="stat"><div class="stat-num" id="forms">0</div><div class="stat-label">Forms</div></div>
+            </div>
+        </div>
+        
+        <div class="warning">
+            <strong>⚠️ CRITICAL SERVICE GAPS</strong>
+            <p style="margin-top: 10px;">The following essential healthcare services are <strong>NOT found in this service registry</strong>:</p>
+            <ul>
+                <li><strong>Polyclinic appointments</strong> - No service for booking appointments at polyclinics</li>
+                <li><strong>Polyclinic services</strong> - No listing of services available at polyclinics (primary care, child health, etc.)</li>
+                <li><strong>Hospital appointments</strong> - No online appointment booking for QEH</li>
+                <li><strong>Medical records access</strong> - No service to request or view medical records</li>
+                <li><strong>Laboratory/diagnostic services</strong> - No information on lab tests, X-rays, etc.</li>
+                <li><strong>Specialist referrals</strong> - No system for getting specialist referrals</li>
+                <li><strong>Emergency services information</strong> - No A&E wait times or emergency service details</li>
+                <li><strong>Ambulance services</strong> - Not documented in registry</li>
+            </ul>
+            <p style="margin-top: 10px;"><strong>For medical care, contact QEH directly at 436-6450 or visit your nearest polyclinic.</strong></p>
+        </div>
+        
+        <div class="notice">
+            <strong>Note:</strong> This page shows administrative services (birth/death registration, medical certificates) and a few basic hospital services. Most clinical healthcare services (appointments, treatments, consultations) are not in this service registry and must be accessed directly through QEH or polyclinics.
+        </div>
+        
+        <div class="search">
+            <input type="text" id="search" placeholder="Search services..." oninput="filter()">
+        </div>
+        
+        <div class="filters" id="filters"></div>
+        
+        <div class="services" id="services-container"></div>
+    </div>
+    
+    <footer>© 2025 Government of Barbados | <a href="index.html">Back to Services</a></footer>
+
+    <script>
+        var goalData = [
+          {
+            "name": "Know when & where i need to go for hospital",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Queen Elizabeth Hospital (Ministry of Health)",
+            "department": "Not specified",
+            "category": "qeh_hospital"
+          },
+          {
+            "name": "register for medication delivery",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Queen Elizabeth Hospital (Ministry of Health)",
+            "department": "Not specified",
+            "category": "qeh_hospital"
+          },
+          {
+            "name": "get a repeat prescription",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Queen Elizabeth Hospital (Ministry of Health)",
+            "department": "Not specified",
+            "category": "qeh_hospital"
+          },
+          {
+            "name": "let the hospital know i'm here",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Queen Elizabeth Hospital (Ministry of Health)",
+            "department": "Not specified",
+            "category": "qeh_hospital"
+          },
+          {
+            "name": "Queen Elizabeth Hospital - Resumption of Duty Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "qeh_hospital"
+          },
+          {
+            "name": "Queen Elizabeth Hospital - Leave Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "qeh_hospital"
+          },
+          {
+            "name": "Queen Elizabeth Hospital - Travel Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "qeh_hospital"
+          },
+          {
+            "name": "Birth Certificate Insertions",
+            "description": "Allows perons to insert a Father's Name on a Birth Certificate where it was previously omitted on registration of birth",
+            "type": "Service",
+            "ministry": "Office of the Attorney General",
+            "department": "Registration Department - Records Section",
+            "category": "vital_statistics"
+          },
+          {
+            "name": "Issue of Birth Certificates",
+            "description": "Allows persons to apply for Birth Certificates for individuals born in Barbados",
+            "type": "Service",
+            "ministry": "Office of the Attorney General",
+            "department": "Registration Department - Records Section",
+            "category": "vital_statistics"
+          },
+          {
+            "name": "Apply for a birth certificate",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Registration department (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "vital_statistics"
+          },
+          {
+            "name": "APPLICATION FOR BIRTH CERTIFICATE - Barbados Supreme Court",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "vital_statistics"
+          },
+          {
+            "name": "Issue of Death Certificates",
+            "description": "Allows persons to apply for Death Certificates for individuals who died in Barbados",
+            "type": "Service",
+            "ministry": "Office of the Attorney General",
+            "department": "Registration Department - Records Section",
+            "category": "vital_statistics"
+          },
+          {
+            "name": "Apply for death certificate",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Registration department (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "vital_statistics"
+          },
+          {
+            "name": "Application for Death Certificate - Barbados Supreme Court",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "vital_statistics"
+          },
+          {
+            "name": "Death Certificate Request Template",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "vital_statistics"
+          },
+          {
+            "name": "Registration of Births",
+            "description": "All persons born at in Barbados are registered at the Registry of the Registration Department",
+            "type": "Service",
+            "ministry": "Office of the Attorney General",
+            "department": "Registration Department - Records Section",
+            "category": "vital_statistics"
+          },
+          {
+            "name": "Register a birth",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Registration department (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "vital_statistics"
+          },
+          {
+            "name": "Registration of Deaths",
+            "description": "All persons who have died in Barbados are registered at the Registry of the Registration Department",
+            "type": "Service",
+            "ministry": "Office of the Attorney General",
+            "department": "Registration Department - Records Section",
+            "category": "vital_statistics"
+          },
+          {
+            "name": "register a death",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Registration department (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "vital_statistics"
+          },
+          {
+            "name": "Cert Registration of Death",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "vital_statistics"
+          },
+          {
+            "name": "Notice of Death",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "vital_statistics"
+          },
+          {
+            "name": "SUDDEN UNNATURAL DEATH FORM",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "vital_statistics"
+          },
+          {
+            "name": "Screening for children",
+            "description": "Enables citizens to receive screening for hearing at local polyclinics",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation, Ministry of Health and Wellness",
+            "department": "Student Support Services Unit",
+            "category": "public_health"
+          },
+          {
+            "name": "Flight Routing - Health Declaration",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Health and Wellness",
+            "department": "Public Health",
+            "category": "public_health"
+          },
+          {
+            "name": "Port Health Application",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "public_health"
+          },
+          {
+            "name": "Harrison College Health Questionnaire",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "public_health"
+          },
+          {
+            "name": "PorthHealthForm",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "public_health"
+          },
+          {
+            "name": "Additional Duties_ Food, Nutrition & Health",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "public_health"
+          },
+          {
+            "name": "Port Health Passenger Arrival Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "public_health"
+          },
+          {
+            "name": "apply for practice certificate (medical)",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Registration department (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "public_health"
+          },
+          {
+            "name": "Immigration Medical Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Home Affairs",
+            "department": "Immigration Department",
+            "category": "public_health"
+          },
+          {
+            "name": "Patients Referral Form Diabetes",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "public_health"
+          },
+          {
+            "name": "Issuance/Retrieval of Official documents from the Registry Dept.",
+            "description": "Enables citizens to apply for official documents from the Registry Dept. e.g. Birth/Marriage certificates; Enables citizens to seek/retrieve official documents from the Barbados Registry e.g. Change of Name Affidavits",
+            "type": "Service",
+            "ministry": "Ministry of Foreign Affairs and Foreign Trade/O.AG",
+            "department": "Registration Dept. / Overseas Offices",
+            "category": "public_health"
+          },
+          {
+            "name": "Issue of Change of Name Certificates",
+            "description": "Application to Change the name of an individual on their Birth Certificate after payment of the requisite fee",
+            "type": "Service",
+            "ministry": "Office of the Attorney General",
+            "department": "Registration Department - Records Section",
+            "category": "public_health"
+          },
+          {
+            "name": "Ministry of Health - Resumption of Duties",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Health and Wellness",
+            "department": "Public Health",
+            "category": "medical_professional"
+          },
+          {
+            "name": "Medical board - Sick leave over 3 months",
+            "description": "Updating of sick leave in relevant HR solution, submission of matters to Chief Medical Officer and update database with recommendation of the Medical Board, take action depending on recommendation (retirement on medical grounds, fit for work) process benefits payable to Estate in cases of death before medical board",
+            "type": "Service",
+            "ministry": "Ministry of the Public Service",
+            "department": "People Resourcing and Compliance Directorate",
+            "category": "medical_professional"
+          },
+          {
+            "name": "Medical Registration Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "medical_professional"
+          },
+          {
+            "name": "Enables citizens to apply for psychosocial support",
+            "description": "This programme addresses the psychological needs of the clients of the Board to return them to optimal functioning. It entails individual, group and family therapy, as well as psychological assessments for residential clients, potential foster care parents and cases referred by the Court that involve custody or care and control. Psychological expertise is also given to the Court when requested, and in-house training is conducted with the residential staff. Psychoeducation is also conducted with the public on various mental health topics",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Child Care Board",
+            "category": "patient_support"
+          },
+          {
+            "name": "Enables eligible citizens to access holistic social services that drive transformation and empower families.",
+            "description": "The One Family Programme is a holistic social empowerment initiative that supports 1,000 of the most vulnerable families across Barbados. The programme addresses, through an integrated approach, key areas such as personal identification, education and human resource development, health, housing, family dynamics, employment and entrepreneurship and income and social benefits. Each family receives personalized psychosocial support through coaching, mentorship and access to essential services, with a focus on long-term transformation and empowerment.",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "One Family Programme Execution Unit",
+            "category": "patient_support"
+          },
+          {
+            "name": "Human Remains to Barbados",
+            "description": "Enables families to transport human/cremated remains to Barbados for burial",
+            "type": "Service",
+            "ministry": "Ministry of Foreign Affairs and Foreign Trade/Health",
+            "department": "Health / Overseas Offices",
+            "category": "patient_support"
+          },
+          {
+            "name": "Citizens in Distress",
+            "description": "Enables citizens abroad in physical/mental distress to receive a measure of relief; Enables citizens detained at airports to receive assistance; Enables citizens in overseas hospitals to receive consular visits; Enables consular visits to incarcerated citizens; Enables assistance in cross border child custody cases",
+            "type": "Service",
+            "ministry": "Ministry of Foreign Affairs and Foreign Trade",
+            "department": "Overseas Offices",
+            "category": "patient_support"
+          },
+          {
+            "name": "Patient Experience Survey",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "patient_support"
+          }
+        ];
+        
+        var categories = {
+            'qeh_hospital': 'QEH/Hospital Services',
+            'vital_statistics': 'Birth & Death Registration',
+            'public_health': 'Public Health Services',
+            'medical_professional': 'Medical Professional Services',
+            'patient_support': 'Patient Support & Social Services'
+        };
+        
+        var selectedCats = Object.keys(categories);
+        
+        function init() {
+            document.getElementById('total').textContent = goalData.length;
+            document.getElementById('services').textContent = goalData.filter(function(s) { return s.type === 'Service'; }).length;
+            document.getElementById('forms').textContent = goalData.filter(function(s) { return s.type === 'Form'; }).length;
+            
+            var html = '';
+            for (var cat in categories) {
+                html += '<button class="filter-btn active" data-cat="' + cat + '" onclick="toggle(this)">◆ ' + categories[cat] + '</button>';
+            }
+            document.getElementById('filters').innerHTML = html;
+            
+            render(goalData);
+        }
+        
+        function toggle(btn) {
+            var cat = btn.getAttribute('data-cat');
+            var idx = selectedCats.indexOf(cat);
+            if (idx > -1) selectedCats.splice(idx, 1);
+            else selectedCats.push(cat);
+            btn.classList.toggle('active');
+            filter();
+        }
+        
+        function filter() {
+            var search = document.getElementById('search').value.toLowerCase();
+            var filtered = goalData.filter(function(s) {
+                return selectedCats.indexOf(s.category) > -1 &&
+                    (s.name.toLowerCase().indexOf(search) > -1 || 
+                     s.description.toLowerCase().indexOf(search) > -1 ||
+                     s.ministry.toLowerCase().indexOf(search) > -1);
+            });
+            render(filtered);
+        }
+        
+        function render(items) {
+            var html = '';
+            if (items.length === 0) {
+                html = '<div style="padding: 40px 20px; text-align: center; color: #626a6e;">No services found</div>';
+            } else {
+                for (var i = 0; i < items.length; i++) {
+                    var s = items[i];
+                    html += '<div class="card"><div class="card-info"><h3>' + esc(s.name) + '</h3><p>' + esc(s.description) + '</p><div class="meta">' + esc(s.ministry) + ' • ' + esc(s.department) + '</div></div><div class="card-right"><div class="badge">' + esc(s.type) + '</div><div class="badge">' + categories[s.category] + '</div></div></div>';
+                }
+            }
+            document.getElementById('services-container').innerHTML = html;
+        }
+        
+        function esc(t) {
+            var d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
+        
+        init();
+    </script>
+</body>
+</html>

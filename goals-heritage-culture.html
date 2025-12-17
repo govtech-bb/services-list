@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage/Culture - Government Goals - Barbados</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: system-ui, -apple-system, sans-serif; background: #f3f2f1; color: #0b0c0c;}
+        .gov-banner {background: #003078; color: white; padding: 12px 0; font-size: 13px;}
+        .gov-banner-container {max-width: 1200px; margin: 0 auto; padding: 0 20px;}
+        header {background: #ffc72c; padding: 40px 20px;}
+        h1 {font-size: 32px; font-weight: 700; margin-bottom: 10px;}
+        .container {max-width: 1200px; margin: 0 auto; padding: 20px;}
+        .goal-header {background: white; padding: 30px; margin: 20px 0; border-left: 4px solid #1d70b8;}
+        .stats {display: flex; gap: 30px; flex-wrap: wrap; margin: 20px 0;}
+        .stat {flex: 1; min-width: 150px;}
+        .stat-num {font-size: 24px; font-weight: 700; color: #0b0c0c;}
+        .stat-label {font-size: 12px; color: #626a6e; margin-top: 6px;}
+        .filters {margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap;}
+        .filter-btn {padding: 8px 16px; background: #e8f1f8; border: 2px solid #1d70b8; border-radius: 4px; cursor: pointer; font-weight: 600;}
+        .filter-btn.active {background: #003078; color: white;}
+        .search {margin: 20px 0;}
+        .search input {width: 100%; padding: 12px; border: 2px solid #0b0c0c; font-size: 14px;}
+        .services {margin: 20px 0;}
+        .card {background: white; border-left: 4px solid #1d70b8; padding: 20px; margin: 10px 0; display: grid; grid-template-columns: 1fr auto; gap: 20px;}
+        .card-info h3 {margin: 0 0 8px 0; font-size: 16px;}
+        .card-info p {margin: 0; font-size: 13px; color: #626a6e; line-height: 1.5;}
+        .card-right {text-align: right;}
+        .badge {display: inline-block; background: #e8f1f8; color: #003078; padding: 4px 10px; font-size: 11px; font-weight: 600; margin: 4px 0;}
+        .meta {font-size: 12px; color: #626a6e; margin-top: 10px;}
+        .notice {background: #e8f9f3; border-left: 4px solid #00703c; padding: 15px; margin: 20px 0; font-size: 13px;}
+        .notice strong {color: #00703c;}
+        .critical-warning {background: #fef7f7; border-left: 4px solid #d4351c; padding: 20px; margin: 20px 0; font-size: 14px;}
+        .critical-warning strong {color: #d4351c; font-size: 18px;}
+        .critical-warning ul {margin: 10px 0 0 20px;}
+        .critical-warning li {margin: 8px 0; font-weight: 500;}
+        footer {background: #003078; color: white; padding: 20px; margin-top: 40px; text-align: center; font-size: 12px;}
+        footer a {color: white; text-decoration: none;}
+        @media (max-width: 768px) {.card {grid-template-columns: 1fr;} .stats {flex-direction: column;}}
+    </style>
+</head>
+<body>
+    <div class="gov-banner"><div class="gov-banner-container">Official government website</div></div>
+    <header>
+        <div class="container">
+            <div style="font-size: 16px; font-weight: 700; margin-bottom: 15px;">Government of Barbados</div>
+            <div style="margin-bottom: 15px;"><a href="index.html" style="color: #0b0c0c; text-decoration: none; font-weight: 500;">← Back to Services</a></div>
+            <h1>Government Goals</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="goal-header">
+            <h2 style="margin-bottom: 10px;">Heritage/Culture</h2>
+            <p>Growth of the heritage economy as a share of creative & cultural sector activity</p>
+            <div class="stats">
+                <div class="stat"><div class="stat-num" id="total">0</div><div class="stat-label">Actionable Services</div></div>
+                <div class="stat"><div class="stat-num" id="services">0</div><div class="stat-label">Services</div></div>
+                <div class="stat"><div class="stat-num" id="forms">0</div><div class="stat-label">Forms</div></div>
+            </div>
+        </div>
+        
+        <div class="critical-warning">
+            <strong>🚨 CRITICAL: SEVERE SERVICE GAPS</strong>
+            <p style="margin-top: 10px;">Only <strong>13 heritage/culture services</strong> found in the entire government service registry. This is the <strong>second-smallest goals page</strong> (only Clean Water with 9 services is smaller).</p>
+            <p style="margin-top: 10px;"><strong>Essential services NOT found in registry:</strong></p>
+            <ul>
+                <li><strong>Artist registration/support</strong> - No services for artist certification, grants, or professional development</li>
+                <li><strong>Heritage site preservation</strong> - No services for historic site designation, restoration, or maintenance</li>
+                <li><strong>Libraries & archives</strong> - No library cards, book borrowing, archive access, or research services</li>
+                <li><strong>Creative industries support</strong> - No film industry, music industry, publishing, or craft/artisan programs</li>
+                <li><strong>Cultural events support</strong> - Limited to basic permits; no festival grants, venue support, or event coordination</li>
+                <li><strong>Intellectual property</strong> - No copyright registration, trademark services for cultural works</li>
+                <li><strong>Heritage tourism</strong> - No cultural tourism programs or heritage trail development</li>
+                <li><strong>Cultural education</strong> - No arts in schools programs, cultural workshops (beyond basic registration)</li>
+            </ul>
+            <p style="margin-top: 15px;"><strong>This severe lack of services makes achieving "growth of the heritage economy" extremely difficult.</strong></p>
+        </div>
+        
+        <div class="notice">
+            <strong>Note:</strong> The 13 services shown include 3 staff administrative forms and 1 crime reduction program (not heritage-focused). Only ~9 services are genuinely citizen-facing heritage/culture services.
+        </div>
+        
+        <div class="search">
+            <input type="text" id="search" placeholder="Search services..." oninput="filter()">
+        </div>
+        
+        <div class="filters" id="filters"></div>
+        
+        <div class="services" id="services-container"></div>
+    </div>
+    
+    <footer>© 2025 Government of Barbados | <a href="index.html">Back to Services</a></footer>
+
+    <script>
+        var goalData = [
+          {
+            "name": "Multi-faceted initiative dedicated to crime reduction and peace building",
+            "description": "To develop a series of strategies and interventions that reduce crime and promote peace which include, inter alia, the formulation of sports competitions and cultural programmes, technical and vocational skills training and community initiatives .",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "National Peace Programme",
+            "category": "cultural_programs"
+          },
+          {
+            "name": "Enables citizens to register for cultural Programmes",
+            "description": "Provides opportunities through Youth Achieving Results programme for perfoming and visual arts",
+            "type": "Service",
+            "ministry": "Ministry of Youth, Sports and Community Empowerment",
+            "department": "Youth Development Programme",
+            "category": "cultural_programs"
+          },
+          {
+            "name": "Enables citizens to attend public ticketed events hosted at the Centre.",
+            "description": "Concerts, cultural events, lectures, and exhibitions.",
+            "type": "Service",
+            "ministry": "Ministry of Tourism and International Transport",
+            "department": "Barbados Conference Services Ltd.",
+            "category": "cultural_programs"
+          },
+          {
+            "name": "Enables citizens to apply for discounted rates on community or cultural events.",
+            "description": "Concession pricing for certain groups or activities.",
+            "type": "Service",
+            "ministry": "Ministry of Tourism and International Transport",
+            "department": "Barbados Conference Services Ltd.",
+            "category": "cultural_programs"
+          },
+          {
+            "name": "join a cultural programme",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of youth, sports and community empowerment",
+            "department": "Not specified",
+            "category": "cultural_programs"
+          },
+          {
+            "name": "Enables citizens to register for the community arts programme",
+            "description": "Training in art programmes provided to members of the community",
+            "type": "Service",
+            "ministry": "Ministry of Youth, Sports and Community Empowerment",
+            "department": "Community Development Department",
+            "category": "cultural_programs"
+          },
+          {
+            "name": "Enables persons to Receive permission to hold public entertainment events",
+            "description": "Issuing permission to hold public entertainment; Issuing permission to hold public entertainment",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Barbados Revenue Authority",
+            "category": "cultural_programs"
+          },
+          {
+            "name": "Enables citizens and organisations to apply for funding from the Arts and Sport Promotion Fund",
+            "description": "To assist in financing programmes and activities conducted by arts and sporting organisations for the development of the arts and sport in Barbados",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Arts and Sports Promotion Fund",
+            "category": "arts_funding"
+          },
+          {
+            "name": "Museum Tours",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "National Conservation Commission - Folkstone Park",
+            "category": "venue_services"
+          },
+          {
+            "name": "Apply for a loud music permit (p1)",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "The police service (Office of the Attorney General)",
+            "department": "Not specified",
+            "category": "event_permits"
+          },
+          {
+            "name": "Additional Duties-Visual Arts",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Creative Thinkers Virtual Camp 2021",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Additional Duties-Theatre",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          }
+        ];
+        
+        var categories = {
+            'cultural_programs': 'Cultural Programs & Training',
+            'arts_funding': 'Arts Funding',
+            'venue_services': 'Venue & Museum Services',
+            'event_permits': 'Event Permits & Licenses',
+            'admin_forms': 'Administrative Forms'
+        };
+        
+        var selectedCats = Object.keys(categories);
+        
+        function init() {
+            document.getElementById('total').textContent = goalData.length;
+            document.getElementById('services').textContent = goalData.filter(function(s) { return s.type === 'Service'; }).length;
+            document.getElementById('forms').textContent = goalData.filter(function(s) { return s.type === 'Form'; }).length;
+            
+            var html = '';
+            for (var cat in categories) {
+                html += '<button class="filter-btn active" data-cat="' + cat + '" onclick="toggle(this)">◆ ' + categories[cat] + '</button>';
+            }
+            document.getElementById('filters').innerHTML = html;
+            
+            render(goalData);
+        }
+        
+        function toggle(btn) {
+            var cat = btn.getAttribute('data-cat');
+            var idx = selectedCats.indexOf(cat);
+            if (idx > -1) selectedCats.splice(idx, 1);
+            else selectedCats.push(cat);
+            btn.classList.toggle('active');
+            filter();
+        }
+        
+        function filter() {
+            var search = document.getElementById('search').value.toLowerCase();
+            var filtered = goalData.filter(function(s) {
+                return selectedCats.indexOf(s.category) > -1 &&
+                    (s.name.toLowerCase().indexOf(search) > -1 || 
+                     s.description.toLowerCase().indexOf(search) > -1 ||
+                     s.ministry.toLowerCase().indexOf(search) > -1);
+            });
+            render(filtered);
+        }
+        
+        function render(items) {
+            var html = '';
+            if (items.length === 0) {
+                html = '<div style="padding: 40px; text-align: center; color: #626a6e;">No services found</div>';
+            } else {
+                for (var i = 0; i < items.length; i++) {
+                    var s = items[i];
+                    html += '<div class="card"><div class="card-info"><h3>' + esc(s.name) + '</h3><p>' + esc(s.description) + '</p><div class="meta">' + esc(s.ministry) + ' • ' + esc(s.department) + '</div></div><div class="card-right"><div class="badge">' + esc(s.type) + '</div><div class="badge">' + categories[s.category] + '</div></div></div>';
+                }
+            }
+            document.getElementById('services-container').innerHTML = html;
+        }
+        
+        function esc(t) {
+            var d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
+        
+        init();
+    </script>
+</body>
+</html>

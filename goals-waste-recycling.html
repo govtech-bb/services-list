@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Management/Recycling - Government Goals - Barbados</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: system-ui, -apple-system, sans-serif; background: #f3f2f1; color: #0b0c0c;}
+        .gov-banner {background: #003078; color: white; padding: 12px 0; font-size: 13px;}
+        .gov-banner-container {max-width: 1200px; margin: 0 auto; padding: 0 20px;}
+        header {background: #ffc72c; padding: 40px 20px;}
+        h1 {font-size: 32px; font-weight: 700; margin-bottom: 10px;}
+        .container {max-width: 1200px; margin: 0 auto; padding: 20px;}
+        .goal-header {background: white; padding: 30px; margin: 20px 0; border-left: 4px solid #1d70b8;}
+        .stats {display: flex; gap: 30px; flex-wrap: wrap; margin: 20px 0;}
+        .stat {flex: 1; min-width: 150px;}
+        .stat-num {font-size: 24px; font-weight: 700; color: #0b0c0c;}
+        .stat-label {font-size: 12px; color: #626a6e; margin-top: 6px;}
+        .services {margin: 20px 0;}
+        .card {background: white; border-left: 4px solid #1d70b8; padding: 20px; margin: 10px 0;}
+        .card-info h3 {margin: 0 0 8px 0; font-size: 16px;}
+        .card-info p {margin: 0; font-size: 13px; color: #626a6e; line-height: 1.5;}
+        .badge {display: inline-block; background: #e8f1f8; color: #003078; padding: 4px 10px; font-size: 11px; font-weight: 600; margin: 4px 0;}
+        .meta {font-size: 12px; color: #626a6e; margin-top: 10px;}
+        .critical-warning {background: #fef7f7; border-left: 4px solid #d4351c; padding: 20px; margin: 20px 0; font-size: 14px;}
+        .critical-warning strong {color: #d4351c; font-size: 18px;}
+        .critical-warning ul {margin: 10px 0 0 20px;}
+        .critical-warning li {margin: 8px 0; font-weight: 500;}
+        footer {background: #003078; color: white; padding: 20px; margin-top: 40px; text-align: center; font-size: 12px;}
+        footer a {color: white; text-decoration: none;}
+    </style>
+</head>
+<body>
+    <div class="gov-banner"><div class="gov-banner-container">Official government website</div></div>
+    <header>
+        <div class="container">
+            <div style="font-size: 16px; font-weight: 700; margin-bottom: 15px;">Government of Barbados</div>
+            <div style="margin-bottom: 15px;"><a href="index.html" style="color: #0b0c0c; text-decoration: none; font-weight: 500;">← Back to Services</a></div>
+            <h1>Government Goals</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="goal-header">
+            <h2 style="margin-bottom: 10px;">Waste Management/Recycling</h2>
+            <p><strong>Recycling:</strong> Ensure all households receive at least two waste collections per week</p>
+            <p style="margin-top: 5px;"><strong>Waste Management:</strong> Increase all recycling by 20% by 2030</p>
+            <div class="stats">
+                <div class="stat"><div class="stat-num" id="total">0</div><div class="stat-label">Actionable Services</div></div>
+                <div class="stat"><div class="stat-num" id="services">0</div><div class="stat-label">Services</div></div>
+                <div class="stat"><div class="stat-num" id="forms">0</div><div class="stat-label">Forms</div></div>
+            </div>
+        </div>
+        
+        <div class="critical-warning">
+            <strong>🚨 CRITICAL: ONLY 2 SERVICES FOUND</strong>
+            <p style="margin-top: 10px;">This is <strong>THE WORST goals page</strong> in the entire registry. Only 2 services exist for waste management/recycling goals, and <strong>BOTH are internal planning services - ZERO citizen-facing services.</strong></p>
+            
+            <p style="margin-top: 15px;"><strong>The Goals Are:</strong></p>
+            <ul>
+                <li>Ensure ALL households receive at least 2 waste collections per week</li>
+                <li>Increase recycling by 20% by 2030</li>
+            </ul>
+            
+            <p style="margin-top: 15px;"><strong>But ZERO Services Exist For:</strong></p>
+            <ul>
+                <li><strong>Waste collection requests</strong> - Cannot request or schedule waste pickup</li>
+                <li><strong>Missed collection reports</strong> - Cannot report when garbage wasn't collected</li>
+                <li><strong>Collection schedule information</strong> - Cannot find out collection days</li>
+                <li><strong>Recycling pickup</strong> - No recycling collection services listed</li>
+                <li><strong>Recycling centers/drop-off locations</strong> - Cannot find where to recycle</li>
+                <li><strong>Bulky waste collection</strong> - Cannot request pickup of large items</li>
+                <li><strong>Composting programs</strong> - No composting services</li>
+                <li><strong>SSA customer services</strong> - No Sanitation Service Authority services documented</li>
+                <li><strong>Waste complaints/issues</strong> - Cannot report problems</li>
+                <li><strong>Special waste disposal</strong> - No hazardous/electronic waste services</li>
+            </ul>
+            
+            <p style="margin-top: 15px;"><strong>Citizens have NO WAY to interact with waste/recycling services through this government registry. The 2 services shown are internal data collection and advisory - not public services.</strong></p>
+            
+            <p style="margin-top: 15px;"><strong>For waste collection issues, citizens must contact SSA directly (not documented here).</strong></p>
+        </div>
+        
+        <div class="services" id="services-container"></div>
+    </div>
+    
+    <footer>© 2025 Government of Barbados | <a href="index.html">Back to Services</a></footer>
+
+    <script>
+        var goalData = [
+          {
+            "name": "To provide critical and current data on the volume and composition of waste stream of the Waste Characterization Study.",
+            "description": "Internal planning/data collection service - not public-facing",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "Project Management & Co-ordination Unit (formerly Solid Waste Management Unit)",
+            "category": "waste_planning"
+          },
+          {
+            "name": "Advisory services",
+            "description": "Internal planning/data collection service - not public-facing",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "Project Management & Co-ordination Unit (formerly Solid Waste Management Unit)",
+            "category": "waste_planning"
+          }
+        ];
+        
+        function init() {
+            document.getElementById('total').textContent = goalData.length;
+            document.getElementById('services').textContent = goalData.filter(function(s) { return s.type === 'Service'; }).length;
+            document.getElementById('forms').textContent = goalData.filter(function(s) { return s.type === 'Form'; }).length;
+            
+            render(goalData);
+        }
+        
+        function render(items) {
+            var html = '';
+            if (items.length === 0) {
+                html = '<div style="padding: 40px; text-align: center; color: #626a6e;">No services found</div>';
+            } else {
+                for (var i = 0; i < items.length; i++) {
+                    var s = items[i];
+                    html += '<div class="card"><div class="card-info"><h3>' + esc(s.name) + '</h3><p>' + esc(s.description) + '</p><div class="meta">' + esc(s.ministry) + ' • ' + esc(s.department) + '</div><div class="badge" style="margin-top: 10px;">' + esc(s.type) + '</div><div class="badge" style="margin-top: 10px;">Internal Planning Service</div></div></div>';
+                }
+            }
+            document.getElementById('services-container').innerHTML = html;
+        }
+        
+        function esc(t) {
+            var d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
+        
+        init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Increase Food Production - Government Goals - Barbados</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: system-ui, -apple-system, sans-serif; background: #f3f2f1; color: #0b0c0c;}
+        .gov-banner {background: #003078; color: white; padding: 12px 0; font-size: 13px;}
+        .gov-banner-container {max-width: 1200px; margin: 0 auto; padding: 0 20px;}
+        header {background: #ffc72c; padding: 40px 20px;}
+        h1 {font-size: 32px; font-weight: 700; margin-bottom: 10px;}
+        .container {max-width: 1200px; margin: 0 auto; padding: 20px;}
+        .goal-header {background: white; padding: 30px; margin: 20px 0; border-left: 4px solid #1d70b8;}
+        .stats {display: flex; gap: 30px; flex-wrap: wrap; margin: 20px 0;}
+        .stat {flex: 1; min-width: 150px;}
+        .stat-num {font-size: 24px; font-weight: 700; color: #0b0c0c;}
+        .stat-label {font-size: 12px; color: #626a6e; margin-top: 6px;}
+        .filters {margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap;}
+        .filter-btn {padding: 8px 16px; background: #e8f1f8; border: 2px solid #1d70b8; border-radius: 4px; cursor: pointer; font-weight: 600;}
+        .filter-btn.active {background: #003078; color: white;}
+        .search {margin: 20px 0;}
+        .search input {width: 100%; padding: 12px; border: 2px solid #0b0c0c; font-size: 14px;}
+        .services {margin: 20px 0;}
+        .card {background: white; border-left: 4px solid #1d70b8; padding: 20px; margin: 10px 0; display: grid; grid-template-columns: 1fr auto; gap: 20px;}
+        .card-info h3 {margin: 0 0 8px 0; font-size: 16px;}
+        .card-info p {margin: 0; font-size: 13px; color: #626a6e; line-height: 1.5;}
+        .card-right {text-align: right;}
+        .badge {display: inline-block; background: #e8f1f8; color: #003078; padding: 4px 10px; font-size: 11px; font-weight: 600; margin: 4px 0;}
+        .meta {font-size: 12px; color: #626a6e; margin-top: 10px;}
+        .notice {background: #e8f9f3; border-left: 4px solid #00703c; padding: 15px; margin: 20px 0; font-size: 13px;}
+        .notice strong {color: #00703c;}
+        footer {background: #003078; color: white; padding: 20px; margin-top: 40px; text-align: center; font-size: 12px;}
+        footer a {color: white; text-decoration: none;}
+        @media (max-width: 768px) {.card {grid-template-columns: 1fr;} .stats {flex-direction: column;}}
+    </style>
+</head>
+<body>
+    <div class="gov-banner"><div class="gov-banner-container">Official government website</div></div>
+    <header>
+        <div class="container">
+            <div style="font-size: 16px; font-weight: 700; margin-bottom: 15px;">Government of Barbados</div>
+            <div style="margin-bottom: 15px;"><a href="index.html" style="color: #0b0c0c; text-decoration: none; font-weight: 500;">← Back to Services</a></div>
+            <h1>Government Goals</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="goal-header">
+            <h2 style="margin-bottom: 10px;">Contain Cost of Living</h2>
+            <p>Increase food production (25% Livestock, 25% Produce, 5% Fish)</p>
+            <div class="stats">
+                <div class="stat"><div class="stat-num" id="total">0</div><div class="stat-label">Actionable Services</div></div>
+                <div class="stat"><div class="stat-num" id="services">0</div><div class="stat-label">Services</div></div>
+                <div class="stat"><div class="stat-num" id="forms">0</div><div class="stat-label">Forms</div></div>
+            </div>
+        </div>
+        
+        <div class="notice">
+            <strong>Supporting Local Food Security:</strong> These services help farmers, livestock producers, and fishers increase local food production. Services include technical support, rebates and incentives, licensing, and market access support.
+        </div>
+        
+        <div class="search">
+            <input type="text" id="search" placeholder="Search services..." oninput="filter()">
+        </div>
+        
+        <div class="filters" id="filters"></div>
+        
+        <div class="services" id="services-container"></div>
+    </div>
+    
+    <footer>© 2025 Government of Barbados | <a href="index.html">Back to Services</a></footer>
+
+    <script>
+        var goalData = [
+          {
+            "name": "Administration",
+            "description": "Permits to Import Meat Issued; Permits to Import Dairy Issued; Permits to Import Pet Food Issued; Issueing of Per Shipment Commercial Applications Approved; Importation of up to 25lbs of Products of Animal Origin for Personal Consumption; Import Permits for Live Animals/Birds Issued; Import Permits for Vet. Biologicals, Hatching Eggs, Germ Plasma, Feathers, Trophies, etc. Issued; Transhipments Permits for Live Animals/Birds, etc.Issued and Monitored; Transhipment Permits for Products of Animal Origin Issued and Monitored",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Veterinary Services",
+            "category": "livestock_production"
+          },
+          {
+            "name": "Imports",
+            "description": "Certificates for Animal/Bird Shipments Landed and inspected; Hatching Egg Import Approvals Examined at Air Cargo; Quarantine of Dogs or Cats detained; Quarantine of Horses detained; Post Entry Quarantine Inspections & Release (Birds, Horses, Livestock); Vet. Biological Import Shipments Examined (Vaccines/serum); Animal Semen Import Shipments Examined; Miscellaneous Imports Examined (Leather, Feathers, Trophies, Bees, etc.)",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Veterinary Services",
+            "category": "livestock_production"
+          },
+          {
+            "name": "Exports",
+            "description": "Meat Export Shipments Examined; Animal Export Certificates Issued (excluding Equines); Equine Export Certificates Issued; Avian Export Shipments Issued(Baby Chicks); Avian Export Shipments ( Cage Birds, Exotic Birds etc); Dairy (Milk & Flavored Milks) Exports Inspected; Dairy (Other Products) Export Certificates Inspected",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Veterinary Services",
+            "category": "livestock_production"
+          },
+          {
+            "name": "Animal*",
+            "description": "Provision of artificial insemination services for cows, pigs. Baling of hay and provision of hay. Impounding of stray animals. Provision of information on Animal husbandry.",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Animal Nutrition Unit (ANU)",
+            "category": "livestock_production"
+          },
+          {
+            "name": "Slaughtering of food animals",
+            "description": "Provision of Slaughterhouse facility for slaughtermen",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Markets Division",
+            "category": "livestock_production"
+          },
+          {
+            "name": "Inspection",
+            "description": "Inspection and examination of animals for slaughter at abattoirs",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Markets Division",
+            "category": "livestock_production"
+          },
+          {
+            "name": "Licensing*",
+            "description": "Licensing of butchers, meat vendors, meat shops and slaughterhouses",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Markets Division",
+            "category": "livestock_production"
+          },
+          {
+            "name": "Livestock Environment Control Rebate",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Agriculture Food and Nutritional Security",
+            "department": "Agricultural Development",
+            "category": "livestock_production"
+          },
+          {
+            "name": "Cold storage",
+            "description": "Provision of refrigeration plants for meats, vegetables and produce for short term storage",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Markets Division",
+            "category": "livestock_production"
+          },
+          {
+            "name": "Provision of Irrigation Services",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "BADMC",
+            "category": "crop_production"
+          },
+          {
+            "name": "Rebate on Irrigation Facilities - Individual",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Agriculture Food and Nutritional Security",
+            "department": "Agricultural Development",
+            "category": "crop_production"
+          },
+          {
+            "name": "Rebate on Irrigation Facilities - Organisation",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Agriculture Food and Nutritional Security",
+            "department": "Agricultural Development",
+            "category": "crop_production"
+          },
+          {
+            "name": "Planting Material Distribution",
+            "description": "Provision of sweet potato and cassava planting material.",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Central Agronomic Research Station (CARS)",
+            "category": "crop_production"
+          },
+          {
+            "name": "Plant Propagation*",
+            "description": "Provision of tissue culture planting material",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Tissue Culture Facility at the Home Agri Station",
+            "category": "crop_production"
+          },
+          {
+            "name": "Plant Protection*",
+            "description": "Identification of pest and diseases effecting plants and provision of recommendations for control, conducting Pest Risk Analyses",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Food Crops Research & Development - Entomology and Plant Pathology",
+            "category": "crop_production"
+          },
+          {
+            "name": "Plant Quarantine*",
+            "description": "Clearance of import and exports of agricultural products",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Plant Quarantine Unit",
+            "category": "crop_production"
+          },
+          {
+            "name": "Enables citizens to observe demondtrations of plant propagation",
+            "description": "Free service by appointment",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Soil Conservation Unit",
+            "category": "crop_production"
+          },
+          {
+            "name": "Pesticides Control Approval Application",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Agriculture Food and Nutritional Security",
+            "department": "Pesticides Control Board",
+            "category": "crop_production"
+          },
+          {
+            "name": "Pack House",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "BADMC",
+            "category": "crop_production"
+          },
+          {
+            "name": "Plant proagation and soil conservation*",
+            "description": "Provision of fruit and agroforestry plants and information on their cultivation, assisting with soil conservation (gabion construction), assisting with reaforestation and orchard development",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Soil Conservation Unit",
+            "category": "crop_production"
+          },
+          {
+            "name": "New Fisher Registration",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "Fisheries Division",
+            "category": "fisheries"
+          },
+          {
+            "name": "Renewal Fisher Registration",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "Fisheries Division",
+            "category": "fisheries"
+          },
+          {
+            "name": "Cancellation of Fisher Registration",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "Fisheries Division",
+            "category": "fisheries"
+          },
+          {
+            "name": "Re-registration of a Fishing Vessel that Change Ownership",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "Fisheries Division",
+            "category": "fisheries"
+          },
+          {
+            "name": "Notification of Completion of Construction, Alteration or Converaion of a Local Commercial Fishing Vessel",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "Fisheries Division",
+            "category": "fisheries"
+          },
+          {
+            "name": "Authorisation for Disposal/Donation of a Local Commercial Fishing Vessel",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "Fisheries Division",
+            "category": "fisheries"
+          },
+          {
+            "name": "Importation of a Commercial Fishing Vessel",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "Fisheries Division",
+            "category": "fisheries"
+          },
+          {
+            "name": "Request to Haul-up / Lift / Push Off of a Fishing Vessel",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "Fisheries Division",
+            "category": "fisheries"
+          },
+          {
+            "name": "Permission to Construct a Local Commercial Fishing Vessel",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "Fisheries Division",
+            "category": "fisheries"
+          },
+          {
+            "name": "Permission to Alter a Local Commercial Fishing Vessel",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "Fisheries Division",
+            "category": "fisheries"
+          },
+          {
+            "name": "Permission to Convert a Vessel to a Local Commercial Fishing Vessel",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "Fisheries Division",
+            "category": "fisheries"
+          },
+          {
+            "name": "Appointment for Vessel Inspection",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "Fisheries Division",
+            "category": "fisheries"
+          },
+          {
+            "name": "Services associated with the implementation of integrated and sustainable management (inclusive of marine ecosystem protection) of resources and development within the coastal zone management area in Barbados.",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of Environment and Natural Beautification",
+            "department": "Coastal Zone Management Unit",
+            "category": "fisheries"
+          },
+          {
+            "name": "Agricultural Services Unit - Online Banking and Financial Rebate Registration Information Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Agriculture Food and Nutritional Security",
+            "department": "Agricultural Development",
+            "category": "agricultural_support"
+          },
+          {
+            "name": "Application for Duty-Free Concessions on Agricultural Inputs",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Agriculture Food and Nutritional Security",
+            "department": "Agricultural Development",
+            "category": "agricultural_support"
+          }
+        ];
+        
+        var categories = {
+            'livestock_production': 'Livestock Production & Animal Health',
+            'crop_production': 'Crop Production & Plant Services',
+            'fisheries': 'Fisheries & Marine Resources',
+            'agricultural_support': 'Agricultural Support & Incentives'
+        };
+        
+        var selectedCats = Object.keys(categories);
+        
+        function init() {
+            document.getElementById('total').textContent = goalData.length;
+            document.getElementById('services').textContent = goalData.filter(function(s) { return s.type === 'Service'; }).length;
+            document.getElementById('forms').textContent = goalData.filter(function(s) { return s.type === 'Form'; }).length;
+            
+            var html = '';
+            for (var cat in categories) {
+                html += '<button class="filter-btn active" data-cat="' + cat + '" onclick="toggle(this)">◆ ' + categories[cat] + '</button>';
+            }
+            document.getElementById('filters').innerHTML = html;
+            
+            render(goalData);
+        }
+        
+        function toggle(btn) {
+            var cat = btn.getAttribute('data-cat');
+            var idx = selectedCats.indexOf(cat);
+            if (idx > -1) selectedCats.splice(idx, 1);
+            else selectedCats.push(cat);
+            btn.classList.toggle('active');
+            filter();
+        }
+        
+        function filter() {
+            var search = document.getElementById('search').value.toLowerCase();
+            var filtered = goalData.filter(function(s) {
+                return selectedCats.indexOf(s.category) > -1 &&
+                    (s.name.toLowerCase().indexOf(search) > -1 || 
+                     s.description.toLowerCase().indexOf(search) > -1 ||
+                     s.ministry.toLowerCase().indexOf(search) > -1);
+            });
+            render(filtered);
+        }
+        
+        function render(items) {
+            var html = '';
+            if (items.length === 0) {
+                html = '<div style="padding: 40px 20px; text-align: center; color: #626a6e;">No services found</div>';
+            } else {
+                for (var i = 0; i < items.length; i++) {
+                    var s = items[i];
+                    html += '<div class="card"><div class="card-info"><h3>' + esc(s.name) + '</h3><p>' + esc(s.description) + '</p><div class="meta">' + esc(s.ministry) + ' • ' + esc(s.department) + '</div></div><div class="card-right"><div class="badge">' + esc(s.type) + '</div><div class="badge">' + categories[s.category] + '</div></div></div>';
+                }
+            }
+            document.getElementById('services-container').innerHTML = html;
+        }
+        
+        function esc(t) {
+            var d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
+        
+        init();
+    </script>
+</body>
+</html>

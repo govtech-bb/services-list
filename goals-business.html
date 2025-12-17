@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ease of Doing Business - Government Goals - Barbados</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: system-ui, -apple-system, sans-serif; background: #f3f2f1; color: #0b0c0c;}
+        .gov-banner {background: #003078; color: white; padding: 12px 0; font-size: 13px;}
+        .gov-banner-container {max-width: 1200px; margin: 0 auto; padding: 0 20px;}
+        header {background: #ffc72c; padding: 40px 20px;}
+        h1 {font-size: 32px; font-weight: 700; margin-bottom: 10px;}
+        .container {max-width: 1200px; margin: 0 auto; padding: 20px;}
+        .goal-header {background: white; padding: 30px; margin: 20px 0; border-left: 4px solid #1d70b8;}
+        .stats {display: flex; gap: 30px; flex-wrap: wrap; margin: 20px 0;}
+        .stat {flex: 1; min-width: 150px;}
+        .stat-num {font-size: 24px; font-weight: 700; color: #0b0c0c;}
+        .stat-label {font-size: 12px; color: #626a6e; margin-top: 6px;}
+        .filters {margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap;}
+        .filter-btn {padding: 8px 16px; background: #e8f1f8; border: 2px solid #1d70b8; border-radius: 4px; cursor: pointer; font-weight: 600;}
+        .filter-btn.active {background: #003078; color: white;}
+        .search {margin: 20px 0;}
+        .search input {width: 100%; padding: 12px; border: 2px solid #0b0c0c; font-size: 14px;}
+        .services {margin: 20px 0;}
+        .card {background: white; border-left: 4px solid #1d70b8; padding: 20px; margin: 10px 0; display: grid; grid-template-columns: 1fr auto; gap: 20px;}
+        .card-info h3 {margin: 0 0 8px 0; font-size: 16px;}
+        .card-info p {margin: 0; font-size: 13px; color: #626a6e; line-height: 1.5;}
+        .card-right {text-align: right;}
+        .badge {display: inline-block; background: #e8f1f8; color: #003078; padding: 4px 10px; font-size: 11px; font-weight: 600; margin: 4px 0;}
+        .meta {font-size: 12px; color: #626a6e; margin-top: 10px;}
+        .notice {background: #e8f9f3; border-left: 4px solid #00703c; padding: 15px; margin: 20px 0; font-size: 13px;}
+        .notice strong {color: #00703c;}
+        footer {background: #003078; color: white; padding: 20px; margin-top: 40px; text-align: center; font-size: 12px;}
+        footer a {color: white; text-decoration: none;}
+        @media (max-width: 768px) {.card {grid-template-columns: 1fr;} .stats {flex-direction: column;}}
+    </style>
+</head>
+<body>
+    <div class="gov-banner"><div class="gov-banner-container">Official government website</div></div>
+    <header>
+        <div class="container">
+            <div style="font-size: 16px; font-weight: 700; margin-bottom: 15px;">Government of Barbados</div>
+            <div style="margin-bottom: 15px;"><a href="index.html" style="color: #0b0c0c; text-decoration: none; font-weight: 500;">← Back to Services</a></div>
+            <h1>Government Goals</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="goal-header">
+            <h2 style="margin-bottom: 10px;">Ease of Doing Business</h2>
+            <p>Facilitate faster, more predictable, and transparent business services</p>
+            <div class="stats">
+                <div class="stat"><div class="stat-num" id="total">0</div><div class="stat-label">Actionable Services</div></div>
+                <div class="stat"><div class="stat-num" id="services">0</div><div class="stat-label">Services</div></div>
+                <div class="stat"><div class="stat-num" id="forms">0</div><div class="stat-label">Forms</div></div>
+            </div>
+        </div>
+        
+        <div class="notice">
+            <strong>Note:</strong> This page shows government services for business operations and compliance. Additional business formation services (company registration, business names, partnerships) may be available through CAIPO (Corporate Affairs & Intellectual Property Office). Contact the relevant agencies for complete information.
+        </div>
+        
+        <div class="search">
+            <input type="text" id="search" placeholder="Search services..." oninput="filter()">
+        </div>
+        
+        <div class="filters" id="filters"></div>
+        
+        <div class="services" id="services-container"></div>
+    </div>
+    
+    <footer>© 2025 Government of Barbados | <a href="index.html">Back to Services</a></footer>
+
+    <script>
+        var goalData = [
+          {
+            "name": "Enables annual registration of self-employed persons under the provision of the Profession, Trade and Business Registration Act CAP 373.",
+            "description": "Self-Employed persons will make an annual payment under the provision of the Profession, Trade and Business Registration Act CAP 373 to the Ministry of Labour Social Security and Third Sector (Accounts Department).",
+            "type": "Service",
+            "ministry": "Ministry of Labour, Social Security and Third Sector",
+            "department": "Labour Department",
+            "category": "business_registration"
+          },
+          {
+            "name": "Enables businesses to apply for a certificate of good standing - Registration",
+            "description": "This includes Town & Country Planning, Fire and Health requirements and ensuring that the space capacities are met. In addition, ensuring the staffing complements are up to par, these centres are approved by the Board’s Day Care Committee for registration. It also monitors that the pre-school programmes at these centres are to international standards.",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Child Care Board",
+            "category": "business_registration"
+          },
+          {
+            "name": "CARICOM Rights of Establishment",
+            "description": "Enables CARICOM nationals who qualify to establish a business in Barbados.",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Barbados Immigration Department (BID)",
+            "category": "business_licenses"
+          },
+          {
+            "name": "Agribusiness Farm Registration Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Agriculture Food and Nutritional Security",
+            "department": "Agricultural Development",
+            "category": "business_licenses"
+          },
+          {
+            "name": "Applications for Tour operator services pursuant to the Travel Services Act, 1982",
+            "description": "Enables business/companies to be approved by the Registrar of Travel Services to lawfully operate as an approved Tour Operator via the grant of a License",
+            "type": "Service",
+            "ministry": "Ministry of Tourism and International Transport",
+            "department": "International Transport Division",
+            "category": "business_licenses"
+          },
+          {
+            "name": "Applications for Travel services pursuant to the Travel Services Act, 1982",
+            "description": "Enables business/companies to be approved by the Registrar of Travel Services to lawfully operate as an approved Travel Agent via the grant of a License",
+            "type": "Service",
+            "ministry": "Ministry of Tourism and International Transport",
+            "department": "International Transport Division",
+            "category": "business_licenses"
+          },
+          {
+            "name": "Travel Form -Barbados Prison Service",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "business_licenses"
+          },
+          {
+            "name": "Enables Aircraft Maintenance Engineers to apply for a licence",
+            "description": "The Civil Aviation Authority certifies individuals to perform and certify aircraft maintenance under its regulatory standards.",
+            "type": "Service",
+            "ministry": "Ministry of Tourism and International Transport",
+            "department": "Barbados Civil Aviation Authority",
+            "category": "business_licenses"
+          },
+          {
+            "name": "Enables Air Traffic Controllers to obtain a licence",
+            "description": "The Civil Aviation Authority serves as the official licensing body for air traffic controllers, certifying individuals to provide ATC services in accordance with the intternational and national requirements.",
+            "type": "Service",
+            "ministry": "Ministry of Tourism and International Transport",
+            "department": "Barbados Civil Aviation Authority",
+            "category": "business_licenses"
+          },
+          {
+            "name": "Enables the International Airport to be certified",
+            "description": "The Civil Aviation Act 2022?19 grants BCAA the authority to certify and oversee aerodromes and heliports in Barbados, including the power to inspect, audit, and enforce compliance with national regulations and ICAO standards",
+            "type": "Service",
+            "ministry": "Ministry of Tourism and International Transport",
+            "department": "Barbados Civil Aviation Authority",
+            "category": "business_licenses"
+          },
+          {
+            "name": "Enables Heliports to be certified",
+            "description": "The Civil Aviation Act 2022?19 grants BCAA the authority to certify and oversee aerodromes and heliports in Barbados, including the power to inspect, audit, and enforce compliance with national regulations and ICAO standards",
+            "type": "Service",
+            "ministry": "Ministry of Tourism and International Transport",
+            "department": "Barbados Civil Aviation Authority",
+            "category": "business_licenses"
+          },
+          {
+            "name": "Enables Aviation Screeners to be certified",
+            "description": "The Civil Aviation Authority authorizes individuals to perform security screening duties at the international airport to ensure they meet international and national aviation security standards.",
+            "type": "Service",
+            "ministry": "Ministry of Tourism and International Transport",
+            "department": "Barbados Civil Aviation Authority",
+            "category": "business_licenses"
+          },
+          {
+            "name": "Enables Aviation Maintenance Organizations to be certified",
+            "description": "The Civil Aviation Authority grants formal approval to an organization to conduct aircraft maintenance under strict oversight.",
+            "type": "Service",
+            "ministry": "Ministry of Tourism and International Transport",
+            "department": "Barbados Civil Aviation Authority",
+            "category": "business_licenses"
+          },
+          {
+            "name": "Enables Aviation Training Organizations to be certified",
+            "description": "Barbados Civil Aviation Authority is responsible for certifying and overseeing Aviation Training Organisations (ATOs). This includes approving training organizations that meet regulatory standards for safety, instruction, aircraft maintenance, and more. Once certified, an ATO can conduct the approved pilot training programs.",
+            "type": "Service",
+            "ministry": "Ministry of Tourism and International Transport",
+            "department": "Barbados Civil Aviation Authority",
+            "category": "business_licenses"
+          },
+          {
+            "name": "Environmental Officer Temporary Food License",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "business_licenses"
+          },
+          {
+            "name": "Enables businesses to apply for a certificate of origin.",
+            "description": "Authentication of goods' country of origin for trade purposes.",
+            "type": "Service",
+            "ministry": "Ministry of Industry, Innovation, Science and Technology",
+            "department": "Export Barbados (BIDC)",
+            "category": "business_licenses"
+          },
+          {
+            "name": "Reside & Work",
+            "description": "Enables nationals of other countries who fail to qualify for a more permanent status to reside and work in Barbados for a period of three (3) years in an unspecified job. Also permits persons who are awaiting Citizenship by Marriage to reside and work in the country legally.",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Barbados Immigration Department (BID)",
+            "category": "business_licenses"
+          },
+          {
+            "name": "Enables persons to file Corporation Tax returns",
+            "description": "Electronic filing of Corporation tax returns via TAMIS",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Barbados Revenue Authority",
+            "category": "tax_registration"
+          },
+          {
+            "name": "Enables persons to file Excise Tax return",
+            "description": "Electronic filing of Excise Tax returns via TAMIS",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Barbados Revenue Authority",
+            "category": "tax_registration"
+          },
+          {
+            "name": "Enable persons to register for taxes",
+            "description": "Taxpayer registration; Taxpayer registration",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Barbados Revenue Authority",
+            "category": "tax_registration"
+          },
+          {
+            "name": "Enables persons to Apply for Tax Clearance",
+            "description": "Tax Clearance Certificate Application; Tax Clearance Certificate Application",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Barbados Revenue Authority",
+            "category": "tax_registration"
+          },
+          {
+            "name": "Enables persons to Apply for Land Tax",
+            "description": "Land Tax Clearance Certificate Application",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Barbados Revenue Authority",
+            "category": "tax_registration"
+          },
+          {
+            "name": "Enables persons to file Reverse Tax Credits returns",
+            "description": "Electronic filing of Reverse Tax Credit returns via TAMIS",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Barbados Revenue Authority",
+            "category": "tax_registration"
+          },
+          {
+            "name": "Enables the activation for the use of the Customs Procedure Code (CPC) In ASYCUDA World",
+            "description": "Submission of the approval concession letter from the Ministry of Finance",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Customs and Excise Department",
+            "category": "tax_registration"
+          },
+          {
+            "name": "Enables the clearance of Goods",
+            "description": "Submission of Single Administrative Document (SAD) through ASYCUDA World for the payment of duties and taxes; Apply for an amendment through AW for use of CPC Code; Request an amendment to the manifest/Bill of Lading; Conduct the examination of goods; Request Other Government Agencies (OGAs) intervention for clearance of goods; Issue Refunds for over/underpaymnet of duties an taxes; Assist with Post Entry adjustments",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Customs and Excise Department",
+            "category": "import_export"
+          },
+          {
+            "name": "Enabale the registrtaion of users in ASYCUDA World",
+            "description": "Completion of the Application for Customs Registrtaion Number form and AW User Access Application Form",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Customs and Excise Department",
+            "category": "import_export"
+          },
+          {
+            "name": "Approves companies for Trusted Trader Prgramme",
+            "description": "Conduct assessment and provide registration of the companies",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Customs and Excise Department",
+            "category": "import_export"
+          },
+          {
+            "name": "Enable the registration of Warehouses/Duty-free shops",
+            "description": "Submission of the approval plans from Town and Development Office",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Customs and Excise Department",
+            "category": "import_export"
+          },
+          {
+            "name": "Work Permits",
+            "description": "Permits nationals of other countries to reside and work for specified time in a specified job in a specified capacity.",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Barbados Immigration Department (BID)",
+            "category": "employment_permits"
+          },
+          {
+            "name": "Short Term Work Permit",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Home Affairs",
+            "department": "Immigration Department",
+            "category": "employment_permits"
+          },
+          {
+            "name": "Work Permit - Job Offer",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Home Affairs",
+            "department": "Immigration Department",
+            "category": "employment_permits"
+          },
+          {
+            "name": "Work Permit - Qualifications",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Home Affairs",
+            "department": "Immigration Department",
+            "category": "employment_permits"
+          },
+          {
+            "name": "long term work permit Form C1",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "employment_permits"
+          },
+          {
+            "name": "Work permits (reside & work)",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Immigration",
+            "department": "Not specified",
+            "category": "employment_permits"
+          },
+          {
+            "name": "Immigrant Status",
+            "description": "Enables nationals of other countries, who qualify, to reside and work in Barbados indefinitely.",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Barbados Immigration Department (BID)",
+            "category": "employment_permits"
+          },
+          {
+            "name": "Barbados Welcome Stamp",
+            "description": "Permits nationals of other countries to reside and work remotely for a specified time.",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Barbados Immigration Department (BID)",
+            "category": "employment_permits"
+          },
+          {
+            "name": "Permanent Residence",
+            "description": "Enables nationals of other countries to reside and work in Barbados indefinitely resulting in eligibility for Citizenship after five (5) years.",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Barbados Immigration Department (BID)",
+            "category": "employment_permits"
+          },
+          {
+            "name": "CARICOM Skilled National Status",
+            "description": "Enables CARICOM nationals with a skilled certificate to move and work freely in Barbados.",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Barbados Immigration Department (BID)",
+            "category": "employment_permits"
+          },
+          {
+            "name": "Form C4 Registration of Employment of CARICOM Skilled Nationals",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "employment_permits"
+          },
+          {
+            "name": "Enables client to receive a certification mark",
+            "description": "Testing, inspection and certification of products to a standard",
+            "type": "Service",
+            "ministry": "Ministry of Industry, Innovation, Science and Technology",
+            "department": "Barbados National Standards Institution",
+            "category": "standards_certification"
+          }
+        ];
+        
+        var categories = {
+            'business_registration': 'Business Registration & Formation',
+            'business_licenses': 'Business Licenses & Operating Permits',
+            'tax_registration': 'Tax Registration & Compliance',
+            'import_export': 'Import/Export & Customs',
+            'employment_permits': 'Employment & Work Permits',
+            'standards_certification': 'Standards, Certification & IP'
+        };
+        
+        var selectedCats = Object.keys(categories);
+        
+        function init() {
+            document.getElementById('total').textContent = goalData.length;
+            document.getElementById('services').textContent = goalData.filter(function(s) { return s.type === 'Service'; }).length;
+            document.getElementById('forms').textContent = goalData.filter(function(s) { return s.type === 'Form'; }).length;
+            
+            var html = '';
+            for (var cat in categories) {
+                html += '<button class="filter-btn active" data-cat="' + cat + '" onclick="toggle(this)">◆ ' + categories[cat] + '</button>';
+            }
+            document.getElementById('filters').innerHTML = html;
+            
+            render(goalData);
+        }
+        
+        function toggle(btn) {
+            var cat = btn.getAttribute('data-cat');
+            var idx = selectedCats.indexOf(cat);
+            if (idx > -1) selectedCats.splice(idx, 1);
+            else selectedCats.push(cat);
+            btn.classList.toggle('active');
+            filter();
+        }
+        
+        function filter() {
+            var search = document.getElementById('search').value.toLowerCase();
+            var filtered = goalData.filter(function(s) {
+                return selectedCats.indexOf(s.category) > -1 &&
+                    (s.name.toLowerCase().indexOf(search) > -1 || 
+                     s.description.toLowerCase().indexOf(search) > -1 ||
+                     s.ministry.toLowerCase().indexOf(search) > -1);
+            });
+            render(filtered);
+        }
+        
+        function render(items) {
+            var html = '';
+            if (items.length === 0) {
+                html = '<div style="padding: 40px 20px; text-align: center; color: #626a6e;">No services found</div>';
+            } else {
+                for (var i = 0; i < items.length; i++) {
+                    var s = items[i];
+                    html += '<div class="card"><div class="card-info"><h3>' + esc(s.name) + '</h3><p>' + esc(s.description) + '</p><div class="meta">' + esc(s.ministry) + ' • ' + esc(s.department) + '</div></div><div class="card-right"><div class="badge">' + esc(s.type) + '</div><div class="badge">' + categories[s.category] + '</div></div></div>';
+                }
+            }
+            document.getElementById('services-container').innerHTML = html;
+        }
+        
+        function esc(t) {
+            var d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
+        
+        init();
+    </script>
+</body>
+</html>

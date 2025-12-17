@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schools - Government Goals - Barbados</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: system-ui, -apple-system, sans-serif; background: #f3f2f1; color: #0b0c0c;}
+        .gov-banner {background: #003078; color: white; padding: 12px 0; font-size: 13px;}
+        .gov-banner-container {max-width: 1200px; margin: 0 auto; padding: 0 20px;}
+        header {background: #ffc72c; padding: 40px 20px;}
+        h1 {font-size: 32px; font-weight: 700; margin-bottom: 10px;}
+        .container {max-width: 1200px; margin: 0 auto; padding: 20px;}
+        .goal-header {background: white; padding: 30px; margin: 20px 0; border-left: 4px solid #1d70b8;}
+        .stats {display: flex; gap: 30px; flex-wrap: wrap; margin: 20px 0;}
+        .stat {flex: 1; min-width: 150px;}
+        .stat-num {font-size: 24px; font-weight: 700; color: #0b0c0c;}
+        .stat-label {font-size: 12px; color: #626a6e; margin-top: 6px;}
+        .filters {margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap;}
+        .filter-btn {padding: 8px 16px; background: #e8f1f8; border: 2px solid #1d70b8; border-radius: 4px; cursor: pointer; font-weight: 600;}
+        .filter-btn.active {background: #003078; color: white;}
+        .search {margin: 20px 0;}
+        .search input {width: 100%; padding: 12px; border: 2px solid #0b0c0c; font-size: 14px;}
+        .services {margin: 20px 0;}
+        .card {background: white; border-left: 4px solid #1d70b8; padding: 20px; margin: 10px 0; display: grid; grid-template-columns: 1fr auto; gap: 20px;}
+        .card-info h3 {margin: 0 0 8px 0; font-size: 16px;}
+        .card-info p {margin: 0; font-size: 13px; color: #626a6e; line-height: 1.5;}
+        .card-right {text-align: right;}
+        .badge {display: inline-block; background: #e8f1f8; color: #003078; padding: 4px 10px; font-size: 11px; font-weight: 600; margin: 4px 0;}
+        .meta {font-size: 12px; color: #626a6e; margin-top: 10px;}
+        .notice {background: #e8f9f3; border-left: 4px solid #00703c; padding: 15px; margin: 20px 0; font-size: 13px;}
+        .notice strong {color: #00703c;}
+        .warning {background: #fff4e5; border-left: 4px solid #ff9900; padding: 20px; margin: 20px 0; font-size: 14px;}
+        .warning strong {color: #ff9900; font-size: 16px;}
+        footer {background: #003078; color: white; padding: 20px; margin-top: 40px; text-align: center; font-size: 12px;}
+        footer a {color: white; text-decoration: none;}
+        @media (max-width: 768px) {.card {grid-template-columns: 1fr;} .stats {flex-direction: column;}}
+    </style>
+</head>
+<body>
+    <div class="gov-banner"><div class="gov-banner-container">Official government website</div></div>
+    <header>
+        <div class="container">
+            <div style="font-size: 16px; font-weight: 700; margin-bottom: 15px;">Government of Barbados</div>
+            <div style="margin-bottom: 15px;"><a href="index.html" style="color: #0b0c0c; text-decoration: none; font-weight: 500;">← Back to Services</a></div>
+            <h1>Government Goals</h1>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="goal-header">
+            <h2 style="margin-bottom: 10px;">Schools</h2>
+            <p>Transform the education sector in Barbados</p>
+            <div class="stats">
+                <div class="stat"><div class="stat-num" id="total">0</div><div class="stat-label">Actionable Services</div></div>
+                <div class="stat"><div class="stat-num" id="services">0</div><div class="stat-label">Services</div></div>
+                <div class="stat"><div class="stat-num" id="forms">0</div><div class="stat-label">Forms</div></div>
+            </div>
+        </div>
+        
+        <div class="warning">
+            <strong>⚠️ NOTE: 30% are Administrative Forms</strong>
+            <p style="margin-top: 10px;">Of the 194 services shown, approximately 58 (30%) are internal administrative forms for school staff and institutions (leave forms, requisition forms, travel forms, etc.). While important for school operations, these are not direct services for students and parents.</p>
+        </div>
+        
+        <div class="notice">
+            <strong>Good Coverage:</strong> This goals page has the most comprehensive service listing with 194 services covering student support (textbooks, uniforms, grants), scholarships and loans, school placements, examinations, and vocational training programs.
+        </div>
+        
+        <div class="search">
+            <input type="text" id="search" placeholder="Search services..." oninput="filter()">
+        </div>
+        
+        <div class="filters" id="filters"></div>
+        
+        <div class="services" id="services-container"></div>
+    </div>
+    
+    <footer>© 2025 Government of Barbados | <a href="index.html">Back to Services</a></footer>
+
+    <script>
+        var goalData = [
+          {
+            "name": "Educational Assistance",
+            "description": "Enables citizens to apply for school assistance",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Welfare Department",
+            "category": "student_support"
+          },
+          {
+            "name": "Provision of textbook grant",
+            "description": "Enables citizens (students) to apply for assistance with the purchase of textbooks",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Examinations Department",
+            "category": "student_support"
+          },
+          {
+            "name": "Provision of textbooks to underprivileged children",
+            "description": "Enables citizens (students) to receive textbooks",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Student Support Services Unit",
+            "category": "student_support"
+          },
+          {
+            "name": "Provision of uniform grant to underprivileged children entering secondary school",
+            "description": "Enables citizens (students) to apply for $100 to be used for secondary school uniforms",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Secondary Section",
+            "category": "student_support"
+          },
+          {
+            "name": "$100 textbook grant program",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "student_support"
+          },
+          {
+            "name": "Uniform grant program",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "student_support"
+          },
+          {
+            "name": "Primary School $100 Textbook Grant 2023-2024",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "student_support"
+          },
+          {
+            "name": "School Grant Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "student_support"
+          },
+          {
+            "name": "educational assistance",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of people, empowerment and elder affairs",
+            "department": "Not specified",
+            "category": "student_support"
+          },
+          {
+            "name": "Certificate of Non-Immigrant Student",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Home Affairs",
+            "department": "Immigration Department",
+            "category": "student_support"
+          },
+          {
+            "name": "Application for Enabling grant",
+            "description": "Applicants use an online application form to apply and submit all supporting documentation.",
+            "type": "Service",
+            "ministry": "Ministry of Training and Tertiary Education",
+            "department": "Tertiary Unit",
+            "category": "scholarships_loans"
+          },
+          {
+            "name": "National Development Scholarship",
+            "description": "Applicants use an online application form to apply and submit all supporting documentation.",
+            "type": "Service",
+            "ministry": "Ministry of Training and Tertiary Education",
+            "department": "Tertiary Unit",
+            "category": "scholarships_loans"
+          },
+          {
+            "name": "Errol Barrow Scholarship",
+            "description": "Applicants use an online application form to apply and submit all supporting documentation.",
+            "type": "Service",
+            "ministry": "Ministry of Training and Tertiary Education",
+            "department": "Tertiary Unit",
+            "category": "scholarships_loans"
+          },
+          {
+            "name": "Facilitates Cuba Scholarship",
+            "description": "Applicants use an online application form to apply and submit all supporting documentation.",
+            "type": "Service",
+            "ministry": "Ministry of Training and Tertiary Education",
+            "department": "Tertiary Unit",
+            "category": "scholarships_loans"
+          },
+          {
+            "name": "Facilitates Rotary Club of Barbados scholarship",
+            "description": "Applicants use an online application form to apply and submit all supporting documentation.",
+            "type": "Service",
+            "ministry": "Ministry of Training and Tertiary Education",
+            "department": "Tertiary Unit",
+            "category": "scholarships_loans"
+          },
+          {
+            "name": "Facilitate scholarships offered by other countries",
+            "description": "Applicants use an online application form to apply and submit all supporting documentation.",
+            "type": "Service",
+            "ministry": "Ministry of Training and Tertiary Education",
+            "department": "Tertiary Unit",
+            "category": "scholarships_loans"
+          },
+          {
+            "name": "Enabling Grant Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "scholarships_loans"
+          },
+          {
+            "name": "Rotary Scholarship Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "scholarships_loans"
+          },
+          {
+            "name": "Scholarship (Fellowship) Application Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "scholarships_loans"
+          },
+          {
+            "name": "Enables businesses to apply for a certificate of good standing - Monitoring visits",
+            "description": "This includes Town & Country Planning, Fire and Health requirements and ensuring that the space capacities are met. In addition, ensuring the staffing complements are up to par, these centres are approved by the Board’s Day Care Committee for registration. It also monitors that the pre-school programmes at these centres are to international standards.",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Child Care Board",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables businesses to apply for a certificate of good standing - Town and Country Planning files",
+            "description": "This includes Town & Country Planning, Fire and Health requirements and ensuring that the space capacities are met. In addition, ensuring the staffing complements are up to par, these centres are approved by the Board’s Day Care Committee for registration. It also monitors that the pre-school programmes at these centres are to international standards.",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Child Care Board",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables businesses to apply for a certificate of good standing - Registration",
+            "description": "This includes Town & Country Planning, Fire and Health requirements and ensuring that the space capacities are met. In addition, ensuring the staffing complements are up to par, these centres are approved by the Board’s Day Care Committee for registration. It also monitors that the pre-school programmes at these centres are to international standards.",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Child Care Board",
+            "category": "school_operations"
+          },
+          {
+            "name": "Collaborate with the Barbados Association of Guidance Counsellors (BAGC) to provide summer internships to secondary school students",
+            "description": "Notifies Ministries/Departments/Agencies of the summer programme, liaise with the BAGC in arranging for the commencement of the yeary programme, set policy regarding the honoraria/stipends to summer school/camp facilitators",
+            "type": "Service",
+            "ministry": "Ministry of the Public Service",
+            "department": "Human Resource Policy & Staffing Directorate",
+            "category": "school_operations"
+          },
+          {
+            "name": "Application for Waiver (VAT and customs duty)",
+            "description": "Enables businesses and educational institutions to acquire an exemption from VAT and Customs Duty for educational materials/supplies",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Administration",
+            "category": "school_operations"
+          },
+          {
+            "name": "Diagnostic assessment of children",
+            "description": "Enables citizens (students) to receive Diagnostic in the area of vision, hearing and other psychological challenges.",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Student Support Services Unit",
+            "category": "school_operations"
+          },
+          {
+            "name": "Screening for children",
+            "description": "Enables citizens to receive screening for hearing at local polyclinics",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation, Ministry of Health and Wellness",
+            "department": "Student Support Services Unit",
+            "category": "school_operations"
+          },
+          {
+            "name": "Provision of bursaries for special education needs children",
+            "description": "Enables citizens who need special education for their children and need financial support to apply for assistance from the Ministry",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Student Support Services Unit",
+            "category": "school_operations"
+          },
+          {
+            "name": "Approval for and assistance with research",
+            "description": "Enables citizens to apply for approval to conduct research in the educational sector",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Planning Research and International Relations",
+            "category": "school_operations"
+          },
+          {
+            "name": "Process applications for permission to homeschool children",
+            "description": "Enables parents to educate their children at home",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Nursery and Primary Section",
+            "category": "school_operations"
+          },
+          {
+            "name": "Process applications for permission to operate private schools",
+            "description": "Enables individuals and groups to establish and operate private schools",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Nursery and Primary Section",
+            "category": "school_operations"
+          },
+          {
+            "name": "Process complaints from parents and guardians against school staff",
+            "description": "Enables citizens the opportunity to have their concerns investigated and addressed",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Nursery and Primary Section",
+            "category": "school_operations"
+          },
+          {
+            "name": "Process applications for placement of children in nursery and primary schools",
+            "description": "Enables citizens to apply for assisance with getting their chilren, who were not successful initially, placed into public schools",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Nursery and Primary Section",
+            "category": "school_operations"
+          },
+          {
+            "name": "Provide videography, photography and audio reinforcement services for a ranges of educational events",
+            "description": "Captures and archives educational events and initiatives making them accessible on social media platforms.",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Media Resource Department",
+            "category": "school_operations"
+          },
+          {
+            "name": "Loan educational material and equipment",
+            "description": "Loans educational material and audio-visual equipment within the educatioanl system",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Media Resource Department",
+            "category": "school_operations"
+          },
+          {
+            "name": "Provide printing services to educational institutions",
+            "description": "Prints examination and assessment papers,teaching materials and other educational and administrative documents and reports.",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Media Resource Department",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enable citizens to apply for student loans",
+            "description": "Applicants use an online application form to apply for loans and submit all supporting documentation",
+            "type": "Service",
+            "ministry": "Ministry of Training & Tertiary Education",
+            "department": "Student Revolving Loan Fund",
+            "category": "school_operations"
+          },
+          {
+            "name": "Re-allocation of students to secondary schools",
+            "description": "Enables citizens (students) to request an alternative placement after the BSSEE",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Examinations Department",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enable citizens to make online appointments",
+            "description": "Applicants can make appointments online to see officers of the SRLF to facilitate their transactions or to ask questions.",
+            "type": "Service",
+            "ministry": "Ministry of Training & Tertiary Education",
+            "department": "Student Revolving Loan Fund",
+            "category": "school_operations"
+          },
+          {
+            "name": "Prior Learning Assessment & Recognition",
+            "description": "Prior Learning Assessment & Recognition",
+            "type": "Service",
+            "ministry": "Ministry of Training & Tertiary Education",
+            "department": "Samuel Jackman Prescod Institute of Technology",
+            "category": "school_operations"
+          },
+          {
+            "name": "Skill verification",
+            "description": "Verification of skills for Caricom Skills Certificate",
+            "type": "Service",
+            "ministry": "Ministry of Training & Tertiary Education",
+            "department": "Samuel Jackman Prescod Institute of Technology",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables administrative email contact with students.",
+            "description": "Student Information Management System",
+            "type": "Service",
+            "ministry": "Training and Tertiary Education",
+            "department": "Barbados Vocational Training Board",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables student document request and delivery.",
+            "description": "Student Information Management System",
+            "type": "Service",
+            "ministry": "Training and Tertiary Education",
+            "department": "Barbados Vocational Training Board",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables students to monitor their progress.",
+            "description": "Student Information Management System",
+            "type": "Service",
+            "ministry": "Training and Tertiary Education",
+            "department": "Barbados Vocational Training Board",
+            "category": "school_operations"
+          },
+          {
+            "name": "Online payment of vendors.",
+            "description": "Online Banking",
+            "type": "Service",
+            "ministry": "Training and Tertiary Education",
+            "department": "Barbados Vocational Training Board",
+            "category": "school_operations"
+          },
+          {
+            "name": "Application for Financial assistance",
+            "description": "Applicants use an online application form to apply and submit all supporting documentation.",
+            "type": "Service",
+            "ministry": "Ministry of Training and Tertiary Education",
+            "department": "Tertiary Unit",
+            "category": "school_operations"
+          },
+          {
+            "name": "Application for Special Award",
+            "description": "Applicants submit letter electronically and submit all supporting documentation.",
+            "type": "Service",
+            "ministry": "Ministry of Training and Tertiary Education",
+            "department": "Tertiary Unit",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enable citizens to access their loan statements online",
+            "description": "Borrowers can view and generate statements for their loans online.",
+            "type": "Service",
+            "ministry": "Ministry of Training & Tertiary Education",
+            "department": "Student Revolving Loan Fund",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enable citizens to make loan payments online",
+            "description": "Via SRLF online portal borrowers and sureties make payments via creedit/debit cards or automatic bank transfers.",
+            "type": "Service",
+            "ministry": "Ministry of Training & Tertiary Education",
+            "department": "Student Revolving Loan Fund",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enable citizens to view loan balances online",
+            "description": "Both borrowers and sureties can apply for access to their accounts online to track balances etc.",
+            "type": "Service",
+            "ministry": "Ministry of Training & Tertiary Education",
+            "department": "Student Revolving Loan Fund",
+            "category": "school_operations"
+          },
+          {
+            "name": "Apply to become a teacher",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Request text books for vulnerable families",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Apply to be an invigilator",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "apply for psychological & educational assessment",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "get money to go to private school",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "order past exam papers",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "student audio visual assessments",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "apply for educational data",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "claim invigilator expenses",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "complain about a teacher or school",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "school placement for foreign nationals",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "(teacher) apply for a transfer to another school",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "apply to set up a private school",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "register for private exams",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "(finance) educational equipment loan",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Apply for secondary school place (Over 14 yrs old)",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Apply for secondary school place (Under 14 yrs old)",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Apply to be a Temporary Teacher",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education Technological Innovation and Vocational Training",
+            "department": "Education",
+            "category": "school_operations"
+          },
+          {
+            "name": "Request Substitute Teacher",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education Technological Innovation and Vocational Training",
+            "department": "Education",
+            "category": "school_operations"
+          },
+          {
+            "name": "Parent Volunteer Support Honorarium",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education Technological Innovation and Vocational Training",
+            "department": "Education",
+            "category": "school_operations"
+          },
+          {
+            "name": "Referral to Student Support Service Unit",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education Technological Innovation and Vocational Training",
+            "department": "Student Services",
+            "category": "school_operations"
+          },
+          {
+            "name": "Registration for Private School",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "School Assistant Report",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Monitoring Instrument Virtual Classroom Teacher Observation Checklist",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Parent Volunteer Support Honorarium Request",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Online Application for Referral to Student Services",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Apply as Temporary/Acting Teacher",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Guide to Teacher Evaluation in Barbados",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Temporary Teachers\' Report",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables citizens to receive timely alerts on traffic, weather, health, education et al",
+            "description": "BGIS Alert and WhatsApp Channel",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Barbados Government Information Service",
+            "category": "school_operations"
+          },
+          {
+            "name": "Risk Awareness, Advocacy and Educational Services -",
+            "description": "Educate all citizens about the various elements of Disaster Risk Management Enables the public to request information or a presentation about disaster risk and how these risks can be managed.",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Department of Emergency Management",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables children to be enrolled in a Government Day Nursery - Admissions",
+            "description": "To prepare children for the formal education setting, by providing them with the prerequisite social, cognitive and other life skills while addressing their custodial needs.",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Child Care Board",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables children to be enrolled in a Government Day Nursery - Placements",
+            "description": "To prepare children for the formal education setting, by providing them with the prerequisite social, cognitive and other life skills while addressing their custodial needs.",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Child Care Board",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables children to be enrolled in a Government Day Nursery - Applications",
+            "description": "To prepare children for the formal education setting, by providing them with the prerequisite social, cognitive and other life skills while addressing their custodial needs.",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Child Care Board",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables children to be enrolled in a Government Day Nursery - Complaints",
+            "description": "To prepare children for the formal education setting, by providing them with the prerequisite social, cognitive and other life skills while addressing their custodial needs.",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Child Care Board",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables children to be enrolled in a Government Day Nursery - Waivers",
+            "description": "To prepare children for the formal education setting, by providing them with the prerequisite social, cognitive and other life skills while addressing their custodial needs.",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Child Care Board",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables the Government, employers, job seekers, educators and researchers etc. to access relevant, timely and accurate labour market data.",
+            "description": "Labour Market Information System (LMIS)- facilitates informed decision making, supports effective policy planning, workforce development, education alignment and economic strategies tailored to current and future labour market needs. Available ONLINE",
+            "type": "Service",
+            "ministry": "Ministry of Labour, Social Security and Third Sector",
+            "department": "Manpower, Research and Statistical Unit",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables persons to be trained in tax law",
+            "description": "Taxpayer Education; Taxpayer Education",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Barbados Revenue Authority",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables citizens to book guided tours of the Centre and its facilities.",
+            "description": "Tours for educational groups, visitors, or community organizations.",
+            "type": "Service",
+            "ministry": "Ministry of Tourism and International Transport",
+            "department": "Barbados Conference Services Ltd.",
+            "category": "school_operations"
+          },
+          {
+            "name": "Application for Bachelor of Education (Primary)",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Postgraduate Diploma in Educational Leadership 2021",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Postgraduate Diploma in Education 2021 Secondary Programme",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "POSTGRADUATE DIPLOMA IN SPECIAL NEEDS EDUCATION PROGRAMME",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Additional Duties_ PHYSICAL EDUCATION 2025",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Student Visas",
+            "description": "Enables nationals of other countries to study in Barbados for a specific period at a specified institution.",
+            "type": "Service",
+            "ministry": "Ministry of Home Affairs and Information",
+            "department": "Barbados Immigration Department (BID)",
+            "category": "school_operations"
+          },
+          {
+            "name": "International Student Eligibility Status",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Home Affairs",
+            "department": "Immigration Department",
+            "category": "school_operations"
+          },
+          {
+            "name": "Report Concerning International Student",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Home Affairs",
+            "department": "Immigration Department",
+            "category": "school_operations"
+          },
+          {
+            "name": "Student Transfer",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Home Affairs",
+            "department": "Immigration Department",
+            "category": "school_operations"
+          },
+          {
+            "name": "BCGP Student Application",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Student Profile 2021",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Monitoring Instrument Virtual Classroom (Student)",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "PDW 2021: Enhancing Learning Through Teacher Created Videos",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Registration of Temp Teacher Old",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Teacher Retool Application:CREATING A LEARNING ACTIVITY PACKAGE USING POWERPOINT",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "ETTC-TCCU Teacher Efficacy Application",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Teachers Introductory Course Application",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Monitoring Instrument - Virtual Classroom (Teacher)",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables the clearance of Goods",
+            "description": "Submission of Single Administrative Document (SAD) through ASYCUDA World for the payment of duties and taxes; Apply for an amendment through AW for use of CPC Code; Request an amendment to the manifest/Bill of Lading; Conduct the examination of goods; Request Other Government Agencies (OGAs) intervention for clearance of goods; Issue Refunds for over/underpaymnet of duties an taxes; Assist with Post Entry adjustments",
+            "type": "Service",
+            "ministry": "Ministry of Finance",
+            "department": "Customs and Excise Department",
+            "category": "school_operations"
+          },
+          {
+            "name": "Inspection",
+            "description": "Inspection and examination of animals for slaughter at abattoirs",
+            "type": "Service",
+            "ministry": "Ministry of Agriculture, Food Security & Nutrition",
+            "department": "Markets Division",
+            "category": "school_operations"
+          },
+          {
+            "name": "Enables citizens to utilize the Unit’s resource centre.",
+            "description": "The Unit provides space where persons who may not have access to a computer and/or WIFI and a printer are able to visit the office and prepare their resumes or conduct research on jobs. The Unit also provides assistance to persons, who may have literacy issues and computer deficiencies.",
+            "type": "Service",
+            "ministry": "Ministry of Labour, Social Security and Third Sector",
+            "department": "Barbados Employment and Career Counselling Service",
+            "category": "school_operations"
+          },
+          {
+            "name": "Re-printing of CXC certificates",
+            "description": "Enables citizens to request a reprint of their results from CXC Examinations",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Examinations Department",
+            "category": "examinations"
+          },
+          {
+            "name": "Sale of BSSEE past papers",
+            "description": "Enables citizens to purchase a pack of 10 BSSEE past papers for Mathematics, English and Composition",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Examinations and Finance Department",
+            "category": "examinations"
+          },
+          {
+            "name": "Registration of private candidates for CSEC and CAPE examinations",
+            "description": "Enables citizens to register for CSEC and CAPE Examinations",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Examinations and Finance Department",
+            "category": "examinations"
+          },
+          {
+            "name": "Registration of private candidates for City & Guilds examinations",
+            "description": "Enables citizens to register for City & Guilds examinations",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Examinations Department",
+            "category": "examinations"
+          },
+          {
+            "name": "BSSEE Choice of School 2021",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "examinations"
+          },
+          {
+            "name": "BSSEE Choice of School 2022",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "examinations"
+          },
+          {
+            "name": "Registration of Private Candidates CSEC 2026",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education",
+            "department": "Not specified",
+            "category": "examinations"
+          },
+          {
+            "name": "CSEC Registration of Private Candidates",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education",
+            "department": "Not specified",
+            "category": "examinations"
+          },
+          {
+            "name": "CXC Candidate Registration Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education",
+            "department": "Not specified",
+            "category": "examinations"
+          },
+          {
+            "name": "Register for CAPE",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "examinations"
+          },
+          {
+            "name": "(OLD)Examination Duties Claimant Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "examinations"
+          },
+          {
+            "name": "Warrant to Bury a Body After Examination",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "examinations"
+          },
+          {
+            "name": "OLD version CXC Claimant Form 2023",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "examinations"
+          },
+          {
+            "name": "CXC REGISTRATION FORM",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "examinations"
+          },
+          {
+            "name": "Training Loans",
+            "description": "Public Officers are able to access the seamless doc application form online and to upload supporting documentation",
+            "type": "Service",
+            "ministry": "Ministry of Training and Tertiary Education",
+            "department": "Learning and Development Unit",
+            "category": "tertiary_vocational"
+          },
+          {
+            "name": "In-service training course applications",
+            "description": "Public Officers are able to access the seamless doc application form online and to upload supporting documentation",
+            "type": "Service",
+            "ministry": "Ministry of Training and Tertiary Education",
+            "department": "Learning and Development Unit",
+            "category": "tertiary_vocational"
+          },
+          {
+            "name": "NVQ/CVQ",
+            "description": "National Vocational Qualification",
+            "type": "Service",
+            "ministry": "Ministry of Training & Tertiary Education",
+            "department": "Samuel Jackman Prescod Institute of Technology",
+            "category": "tertiary_vocational"
+          },
+          {
+            "name": "Online applications for training.",
+            "description": "BVTB Website Application Form",
+            "type": "Service",
+            "ministry": "Training and Tertiary Education",
+            "department": "Barbados Vocational Training Board",
+            "category": "tertiary_vocational"
+          },
+          {
+            "name": "Online requests for information from the Admissions Department.",
+            "description": "BVTB Website Request Form",
+            "type": "Service",
+            "ministry": "Training and Tertiary Education",
+            "department": "Barbados Vocational Training Board",
+            "category": "tertiary_vocational"
+          },
+          {
+            "name": "grants for tertiary education",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "tertiary_vocational"
+          },
+          {
+            "name": "Application for Local In-Service Training",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education Technological Innovation and Vocational Training",
+            "department": "Education",
+            "category": "tertiary_vocational"
+          },
+          {
+            "name": "After School Robot Training",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "tertiary_vocational"
+          },
+          {
+            "name": "After School Robotic Training Programme",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "tertiary_vocational"
+          },
+          {
+            "name": "Enables citizens to apply for psychosocial support",
+            "description": "This programme addresses the psychological needs of the clients of the Board to return them to optimal functioning. It entails individual, group and family therapy, as well as psychological assessments for residential clients, potential foster care parents and cases referred by the Court that involve custody or care and control. Psychological expertise is also given to the Court when requested, and in-house training is conducted with the residential staff. Psychoeducation is also conducted with the public on various mental health topics",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "Child Care Board",
+            "category": "tertiary_vocational"
+          },
+          {
+            "name": "Enables citizens to register for the Community Engagement and Educational Programme",
+            "description": "Training provided to members of the community in various areas",
+            "type": "Service",
+            "ministry": "Ministry of Youth, Sports and Community Empowerment",
+            "department": "Community Development Department",
+            "category": "tertiary_vocational"
+          },
+          {
+            "name": "Vocational Teacher Training in Adult Education",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "tertiary_vocational"
+          },
+          {
+            "name": "Multi-faceted initiative dedicated to crime reduction and peace building",
+            "description": "To develop a series of strategies and interventions that reduce crime and promote peace which include, inter alia, the formulation of sports competitions and cultural programmes, technical and vocational skills training and community initiatives .",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "National Peace Programme",
+            "category": "tertiary_vocational"
+          },
+          {
+            "name": "Allocation of students to sixth-form at secondary schools",
+            "description": "Enables citizens (students) to apply for placement to sixth-form schools based on their preference and results from CSEC examinations.",
+            "type": "Service",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Examinations Department",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Study Leave",
+            "description": "Public Officers are able to access the seamless doc application form online and to upload supporting documentation",
+            "type": "Service",
+            "ministry": "Ministry of Training and Tertiary Education",
+            "department": "Learning and Development Unit",
+            "category": "admin_forms"
+          },
+          {
+            "name": "apply for sixth form",
+            "description": "Service information available upon inquiry",
+            "type": "Service",
+            "ministry": "Ministry of educational transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Local Inservice Form Revised 2020",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education Technological Innovation and Vocational Training",
+            "department": "Education",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Ministry of Education - Application for Leave",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education Technological Innovation and Vocational Training",
+            "department": "Education",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Apply for Study Leave",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education Technological Innovation and Vocational Training",
+            "department": "Education",
+            "category": "admin_forms"
+          },
+          {
+            "name": "MIST Application for Leave",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education Technological Innovation and Vocational Training",
+            "department": "Education",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Student Services Sample Referral Forms",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education Technological Innovation and Vocational Training",
+            "department": "Student Services",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Harrison College School Admission Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Choice of School Form 2022",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Choice of Schools Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Resumption of Duty",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "6th Form Application 2021",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "6TH FORM APPLICATION 2024",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "School Assistant Registration Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Inventory and Requisition Form Schools",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "2020 Application into 6th Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "ETTC Referee Form - Dip Ed Sec",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education; Ministry of Education",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Student Profile Form SSSU1",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Summer School Application Form 2022",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Travel Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education; Ministry of Education",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Application to 6th Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Requisition Form - Nursery and Primary Schools",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "BARBADOS DEFENCE FORCE SCHOOL SHUTTLE REGISTRATION FORM",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Requisition Form Schools - Toner Printing Supplies 2025",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Requisition Form Schools - Toner Printing Supplies.docx",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Online Application for Leave",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Resumption of Duty for School Staff",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Rebate Registration Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Test PDF: ITC Evaluation Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Education",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "School Evaluation Form J",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Home Schooling Application Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "School Application Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Online Application Form for the Teaching Service",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Ancillary Staff Substitute Request Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Form C-1 Subject/Curriculum Coordinator",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Guidance Counsellor Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "New Admissions to School Register Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Ross University School of Medicine Application Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Teacher Evaluation - Interim Report - Form A",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Department Evaluation Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Head of Department Evaluation Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Deputy Principal Evaluation Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Financial Assistance Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "ITC Evaluation Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Principal Evaluation Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Senior Teacher Evaluation Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Teacher Evaluation Form B",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Ministry of Educational Transformation",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Enables eligible citizens to access holistic social services that drive transformation and empower families.",
+            "description": "The One Family Programme is a holistic social empowerment initiative that supports 1,000 of the most vulnerable families across Barbados. The programme addresses, through an integrated approach, key areas such as personal identification, education and human resource development, health, housing, family dynamics, employment and entrepreneurship and income and social benefits. Each family receives personalized psychosocial support through coaching, mentorship and access to essential services, with a focus on long-term transformation and empowerment.",
+            "type": "Service",
+            "ministry": "Ministry of People Empowerment and Elder Affairs",
+            "department": "One Family Programme Execution Unit",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Meeting Form: Early Childhood Education Technical Cooperation Mission",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Continuing Education Programme Application Form 2024-2025",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Application form for Special Needs Education Programme",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Lost Learner Permit Form",
+            "description": "Student driver but lost your permit? Complete and submit this form",
+            "type": "Service",
+            "ministry": "Ministry of Transport, Works and Water Resources",
+            "department": "Barbados Licensing Authority",
+            "category": "admin_forms"
+          },
+          {
+            "name": "New Learner Permit Form",
+            "description": "Need a permit to be a student driver? Complete this form.",
+            "type": "Service",
+            "ministry": "Ministry of Transport, Works and Water Resources",
+            "department": "Barbados Licensing Authority",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Driving Instructor Student Exchange Form",
+            "description": "For Driving Instructors who want to exchange their students and their driving test dates",
+            "type": "Service",
+            "ministry": "Ministry of Transport, Works and Water Resources",
+            "department": "Barbados Licensing Authority",
+            "category": "admin_forms"
+          },
+          {
+            "name": "ICT4PWDs Workshop Form - Student",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "SSSU Student Referral Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          },
+          {
+            "name": "Literacy and Numeracy Clinic Form",
+            "description": "Service information available upon inquiry",
+            "type": "Form",
+            "ministry": "Not specified",
+            "department": "Not specified",
+            "category": "admin_forms"
+          }
+        ];
+        
+        var categories = {
+            'student_support': 'Student Support (Textbooks, Uniforms, Grants)',
+            'scholarships_loans': 'Scholarships & Student Loans',
+            'school_operations': 'School Operations & Placement',
+            'examinations': 'Examinations & Certifications',
+            'tertiary_vocational': 'Tertiary & Vocational Training',
+            'admin_forms': 'Administrative Forms'
+        };
+        
+        var selectedCats = Object.keys(categories);
+        
+        function init() {
+            document.getElementById('total').textContent = goalData.length;
+            document.getElementById('services').textContent = goalData.filter(function(s) { return s.type === 'Service'; }).length;
+            document.getElementById('forms').textContent = goalData.filter(function(s) { return s.type === 'Form'; }).length;
+            
+            var html = '';
+            for (var cat in categories) {
+                html += '<button class="filter-btn active" data-cat="' + cat + '" onclick="toggle(this)">◆ ' + categories[cat] + '</button>';
+            }
+            document.getElementById('filters').innerHTML = html;
+            
+            render(goalData);
+        }
+        
+        function toggle(btn) {
+            var cat = btn.getAttribute('data-cat');
+            var idx = selectedCats.indexOf(cat);
+            if (idx > -1) selectedCats.splice(idx, 1);
+            else selectedCats.push(cat);
+            btn.classList.toggle('active');
+            filter();
+        }
+        
+        function filter() {
+            var search = document.getElementById('search').value.toLowerCase();
+            var filtered = goalData.filter(function(s) {
+                return selectedCats.indexOf(s.category) > -1 &&
+                    (s.name.toLowerCase().indexOf(search) > -1 || 
+                     s.description.toLowerCase().indexOf(search) > -1 ||
+                     s.ministry.toLowerCase().indexOf(search) > -1);
+            });
+            render(filtered);
+        }
+        
+        function render(items) {
+            var html = '';
+            if (items.length === 0) {
+                html = '<div style="padding: 40px 20px; text-align: center; color: #626a6e;">No services found</div>';
+            } else {
+                for (var i = 0; i < items.length; i++) {
+                    var s = items[i];
+                    html += '<div class="card"><div class="card-info"><h3>' + esc(s.name) + '</h3><p>' + esc(s.description) + '</p><div class="meta">' + esc(s.ministry) + ' • ' + esc(s.department) + '</div></div><div class="card-right"><div class="badge">' + esc(s.type) + '</div><div class="badge">' + categories[s.category] + '</div></div></div>';
+                }
+            }
+            document.getElementById('services-container').innerHTML = html;
+        }
+        
+        function esc(t) {
+            var d = document.createElement('div');
+            d.textContent = t;
+            return d.innerHTML;
+        }
+        
+        init();
+    </script>
+</body>
+</html>
