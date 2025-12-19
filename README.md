@@ -1,5 +1,7 @@
 # Services list — Government of Barbados
 
+[https://govtech-bb.github.io/services-list/](https://govtech-bb.github.io/services-list/)
+
 A small static website (two pages) that lists government services and goals.
 
 Quick start
